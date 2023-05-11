@@ -1,0 +1,318 @@
+ 04-27 at 00:39 | backbone: resnet10
+model_name: CropDisease_426_continue
+model_args: null
+linear_bn: false
+linear_bn_affine: false
+suffix: ''
+source_data: miniImageNet
+disable_validation: false
+seed: 0
+ckpt: null
+load_base: true
+load_flexible: true
+resume: false
+pretrained: false
+data:
+  disable_validation: false
+  dataset: miniImageNet_train
+  val_dataset: CropDisease_test
+  test_dataset: null
+  image_size: 224
+  batch_size: 64
+  val_batch_size: null
+  num_classes: null
+  split_fraction: 0.2
+  normalize_type: imagenet
+  train_aug: true
+  val_aug: few_shot_test
+  train_split_type: null
+  val_split_type: null
+  seed: 0
+  split_seed: 0
+  num_workers: 6
+  shuffle_val: false
+  limit_train_data: null
+  replica_rank: null
+  num_replica: 1
+  n_way: 5
+  n_shot: 5
+  n_query: 15
+  num_episodes: 600
+trainer:
+  logger: false
+  checkpoint_callback: true
+  default_root_dir: null
+  num_nodes: 1
+  tpu_cores: null
+  check_val_every_n_epoch: 5
+  fast_dev_run: false
+  limit_train_batches: 1.0
+  limit_val_batches: 1.0
+  limit_test_batches: 1.0
+  accelerator: ddp
+  sync_batchnorm: true
+  num_sanity_val_steps: 0
+  resume_from_checkpoint: null
+  benchmark: false
+  reload_dataloaders_every_epoch: false
+  terminate_on_nan: false
+  auto_scale_batch_size: false
+  automatic_optimization: null
+  progress_bar_refresh_rate: 0
+  log_every_n_steps: 10000000000
+  replace_sampler_ddp: false
+  weights_save_path: ckpt/CropDisease_426_continue
+  max_epochs: 120
+  gpus: 3
+  deterministic: true
+disable_logfile: false
+logger:
+  _target_: utils.custom_logger.CustomLogger
+  name: CropDisease_426_continue
+  version: null
+  test: false
+  save_dir: logs
+  disable_logfile: false
+optimizer:
+  _target_: torch.optim.SGD
+  lr: 0.0005
+  momentum: 0.9
+  dampening: 0
+  weight_decay: 0.0001
+  nesterov: false
+eval_mode: few_shot
+n_way: 5
+n_shot: 5
+n_query: 15
+print_val: false
+eval:
+  fine_tune:
+    name: LR
+    use_norm: false
+callbacks:
+  model_checkpoint:
+    _target_: callbacks.custom_callbacks.CheckpointCallback
+    monitor: acc_mean
+    save_top_k: 1
+    save_last: true
+    mode: max
+    filename: '{epoch:03d}'
+    dirpath: ckpt/CropDisease_426_continue
+    verbose: true
+    save_every_n_epoch: null
+  lr_logger:
+    _target_: callbacks.lr_monitor.LearningRateMonitor
+    logging_interval: epoch
+scheduler:
+  _target_: torch.optim.lr_scheduler.MultiStepLR
+  milestones:
+  - 84
+  - 108
+  gamma: 0.1
+test: false
+lm_ce: 1
+lm_u: 1
+cosine_weight: false
+teacher_temp: 0.1
+apply_unlabel: true
+reset_student_head: false
+unlabel_aug: weak_strong
+simclr: false
+simclr_params:
+  temperature: 0.1
+  projection: true
+unlabel_params:
+  dataset: CropDisease_train
+  batch_size: 64
+  unlabel_aug: weak_strong
+  no_stop_grad: false
+ckpt_preload: ./ckpt/CropDisease_426/last.ckpt
+launcher:
+  time: '6'
+  name: local
+  gpus: 3
+system_name: ce_distill_ema
+mometum_update: 0.99
+apply_center: false
+center_momentum: 0.9
+extractor: student
+
+ 04-27 at 00:39 | loading indices from data/cache_cdfsl/CropDisease_indices_partial_train_0.2_0.npy
+ 04-27 at 00:39 | None
+ 04-27 at 00:39 | []
+ 04-27 at 00:39 | loaded dataset CropDisease_train:: #data: 10849
+ 04-27 at 00:39 | unlabel batch: 169
+ 04-27 at 00:39 | unlabel loader size: 56
+ 04-27 at 00:39 | loaded dataset miniImageNet_train:: #data: 38400
+ 04-27 at 00:39 | train loader size: 200
+ 04-27 at 00:39 | loading indices from data/cache_cdfsl/CropDisease_indices_partial_test_0.2_0.npy
+ 04-27 at 00:39 | loading indices from data/cache_cdfsl/CropDiseasetest_fs_indices__partial_0.2_0.npy
+ 04-27 at 00:39 | loaded dataset CropDisease_test:: #class: 38, #data: 43456
+ 04-27 at 00:41 | epoch: 0     step: 199    :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 13.5198  l_ce_epoch: 0.1861  l_u_epoch: 1.0629  l_div_epoch: -0.0741  l_bf_epoch: 8.3653  loss_pseudo_inter_epoch: 0.4001  top1_epoch: 0.9497  attention_on_source_epoch: 0.7827
+ 04-27 at 00:43 | epoch: 1     step: 399    :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 12.6891  l_ce_epoch: 0.1855  l_u_epoch: 0.9813  l_div_epoch: -0.0746  l_bf_epoch: 8.3461  loss_pseudo_inter_epoch: 0.3884  top1_epoch: 0.9487  attention_on_source_epoch: 0.7773
+ 04-27 at 00:47 | epoch: 2     step: 599    :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 12.7708  l_ce_epoch: 0.1896  l_u_epoch: 0.9849  l_div_epoch: -0.0769  l_bf_epoch: 8.3940  loss_pseudo_inter_epoch: 0.3868  top1_epoch: 0.9473  attention_on_source_epoch: 0.7788
+ 04-27 at 00:50 | epoch: 3     step: 799    :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 12.6673  l_ce_epoch: 0.1826  l_u_epoch: 0.9823  l_div_epoch: -0.0714  l_bf_epoch: 8.3473  loss_pseudo_inter_epoch: 0.3818  top1_epoch: 0.9510  attention_on_source_epoch: 0.7780
+ 04-27 at 00:55 | Test Acc (CropDisease_test) = 0.9456 +- 0.0039
+ 04-27 at 00:55 | epoch: 4     step: 999    :: acc_mean: 0.9456  acc_std: 0.0039  acc_mean_full: 0.9456
+ 04-27 at 00:55 | epoch: 4     step: 999    :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 12.5675  l_ce_epoch: 0.1784  l_u_epoch: 0.9762  l_div_epoch: -0.0750  l_bf_epoch: 8.3574  loss_pseudo_inter_epoch: 0.3872  top1_epoch: 0.9523  attention_on_source_epoch: 0.7787
+ 04-27 at 00:59 | epoch: 5     step: 1199   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 12.4331  l_ce_epoch: 0.1848  l_u_epoch: 0.9566  l_div_epoch: -0.0751  l_bf_epoch: 8.3462  loss_pseudo_inter_epoch: 0.3856  top1_epoch: 0.9488  attention_on_source_epoch: 0.7807
+ 04-27 at 01:02 | epoch: 6     step: 1399   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 12.7106  l_ce_epoch: 0.1845  l_u_epoch: 0.9842  l_div_epoch: -0.0735  l_bf_epoch: 8.3858  loss_pseudo_inter_epoch: 0.3849  top1_epoch: 0.9477  attention_on_source_epoch: 0.7828
+ 04-27 at 01:06 | epoch: 7     step: 1599   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 12.3875  l_ce_epoch: 0.1836  l_u_epoch: 0.9532  l_div_epoch: -0.0748  l_bf_epoch: 8.3411  loss_pseudo_inter_epoch: 0.3850  top1_epoch: 0.9507  attention_on_source_epoch: 0.7803
+ 04-27 at 01:09 | epoch: 8     step: 1799   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 12.4645  l_ce_epoch: 0.1859  l_u_epoch: 0.9587  l_div_epoch: -0.0749  l_bf_epoch: 8.3217  loss_pseudo_inter_epoch: 0.3875  top1_epoch: 0.9507  attention_on_source_epoch: 0.7800
+ 04-27 at 01:14 | Test Acc (CropDisease_test) = 0.9430 +- 0.0040
+ 04-27 at 01:14 | epoch: 9     step: 1999   :: acc_mean: 0.9430  acc_std: 0.0040  acc_mean_full: 0.9430
+ 04-27 at 01:14 | epoch: 9     step: 1999   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 12.5477  l_ce_epoch: 0.1859  l_u_epoch: 0.9674  l_div_epoch: -0.0764  l_bf_epoch: 8.3364  loss_pseudo_inter_epoch: 0.3790  top1_epoch: 0.9498  attention_on_source_epoch: 0.7785
+ 04-27 at 01:18 | epoch: 10    step: 2199   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 12.5454  l_ce_epoch: 0.1850  l_u_epoch: 0.9677  l_div_epoch: -0.0751  l_bf_epoch: 8.3551  loss_pseudo_inter_epoch: 0.3821  top1_epoch: 0.9503  attention_on_source_epoch: 0.7811
+ 04-27 at 01:22 | epoch: 11    step: 2399   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 12.4586  l_ce_epoch: 0.1898  l_u_epoch: 0.9541  l_div_epoch: -0.0773  l_bf_epoch: 8.3763  loss_pseudo_inter_epoch: 0.3801  top1_epoch: 0.9459  attention_on_source_epoch: 0.7835
+ 04-27 at 01:25 | epoch: 12    step: 2599   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 12.4845  l_ce_epoch: 0.1883  l_u_epoch: 0.9584  l_div_epoch: -0.0779  l_bf_epoch: 8.3582  loss_pseudo_inter_epoch: 0.3788  top1_epoch: 0.9495  attention_on_source_epoch: 0.7814
+ 04-27 at 01:29 | epoch: 13    step: 2799   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 12.2232  l_ce_epoch: 0.1760  l_u_epoch: 0.9449  l_div_epoch: -0.0785  l_bf_epoch: 8.3380  loss_pseudo_inter_epoch: 0.3754  top1_epoch: 0.9528  attention_on_source_epoch: 0.7804
+ 04-27 at 01:33 | Test Acc (CropDisease_test) = 0.9459 +- 0.0038
+ 04-27 at 01:33 | epoch: 14    step: 2999   :: acc_mean: 0.9459  acc_std: 0.0038  acc_mean_full: 0.9459
+ 04-27 at 01:33 | epoch: 14    step: 2999   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 12.4075  l_ce_epoch: 0.1943  l_u_epoch: 0.9448  l_div_epoch: -0.0765  l_bf_epoch: 8.3474  loss_pseudo_inter_epoch: 0.3778  top1_epoch: 0.9449  attention_on_source_epoch: 0.7828
+ 04-27 at 01:37 | epoch: 15    step: 3199   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 12.4145  l_ce_epoch: 0.1754  l_u_epoch: 0.9651  l_div_epoch: -0.0754  l_bf_epoch: 8.3206  loss_pseudo_inter_epoch: 0.3697  top1_epoch: 0.9515  attention_on_source_epoch: 0.7805
+ 04-27 at 01:41 | epoch: 16    step: 3399   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 12.1734  l_ce_epoch: 0.1789  l_u_epoch: 0.9373  l_div_epoch: -0.0775  l_bf_epoch: 8.3242  loss_pseudo_inter_epoch: 0.3746  top1_epoch: 0.9512  attention_on_source_epoch: 0.7789
+ 04-27 at 01:45 | epoch: 17    step: 3599   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 12.2598  l_ce_epoch: 0.1842  l_u_epoch: 0.9408  l_div_epoch: -0.0772  l_bf_epoch: 8.3267  loss_pseudo_inter_epoch: 0.3702  top1_epoch: 0.9511  attention_on_source_epoch: 0.7783
+ 04-27 at 01:48 | epoch: 18    step: 3799   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 12.3479  l_ce_epoch: 0.1795  l_u_epoch: 0.9539  l_div_epoch: -0.0719  l_bf_epoch: 8.3532  loss_pseudo_inter_epoch: 0.3713  top1_epoch: 0.9513  attention_on_source_epoch: 0.7826
+ 04-27 at 01:53 | Test Acc (CropDisease_test) = 0.9461 +- 0.0037
+ 04-27 at 01:53 | epoch: 19    step: 3999   :: acc_mean: 0.9461  acc_std: 0.0037  acc_mean_full: 0.9461
+ 04-27 at 01:53 | epoch: 19    step: 3999   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 12.2975  l_ce_epoch: 0.1829  l_u_epoch: 0.9457  l_div_epoch: -0.0758  l_bf_epoch: 8.3207  loss_pseudo_inter_epoch: 0.3744  top1_epoch: 0.9471  attention_on_source_epoch: 0.7789
+ 04-27 at 01:56 | epoch: 20    step: 4199   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 11.9517  l_ce_epoch: 0.1798  l_u_epoch: 0.9146  l_div_epoch: -0.0795  l_bf_epoch: 8.3231  loss_pseudo_inter_epoch: 0.3664  top1_epoch: 0.9514  attention_on_source_epoch: 0.7810
+ 04-27 at 02:00 | epoch: 21    step: 4399   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 11.9836  l_ce_epoch: 0.1778  l_u_epoch: 0.9202  l_div_epoch: -0.0771  l_bf_epoch: 8.2845  loss_pseudo_inter_epoch: 0.3654  top1_epoch: 0.9511  attention_on_source_epoch: 0.7768
+ 04-27 at 02:04 | epoch: 22    step: 4599   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 11.7767  l_ce_epoch: 0.1735  l_u_epoch: 0.9038  l_div_epoch: -0.0749  l_bf_epoch: 8.2867  loss_pseudo_inter_epoch: 0.3642  top1_epoch: 0.9515  attention_on_source_epoch: 0.7775
+ 04-27 at 02:07 | epoch: 23    step: 4799   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 11.9727  l_ce_epoch: 0.1840  l_u_epoch: 0.9129  l_div_epoch: -0.0789  l_bf_epoch: 8.2697  loss_pseudo_inter_epoch: 0.3685  top1_epoch: 0.9486  attention_on_source_epoch: 0.7767
+ 04-27 at 02:12 | Test Acc (CropDisease_test) = 0.9480 +- 0.0036
+ 04-27 at 02:12 | epoch: 24    step: 4999   :: acc_mean: 0.9480  acc_std: 0.0036  acc_mean_full: 0.9480
+ 04-27 at 02:12 | epoch: 24    step: 4999   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 11.7554  l_ce_epoch: 0.1733  l_u_epoch: 0.9016  l_div_epoch: -0.0792  l_bf_epoch: 8.2792  loss_pseudo_inter_epoch: 0.3723  top1_epoch: 0.9530  attention_on_source_epoch: 0.7776
+ 04-27 at 02:16 | epoch: 25    step: 5199   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 11.5132  l_ce_epoch: 0.1656  l_u_epoch: 0.8857  l_div_epoch: -0.0769  l_bf_epoch: 8.2878  loss_pseudo_inter_epoch: 0.3580  top1_epoch: 0.9558  attention_on_source_epoch: 0.7806
+ 04-27 at 02:19 | epoch: 26    step: 5399   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 11.6970  l_ce_epoch: 0.1738  l_u_epoch: 0.8961  l_div_epoch: -0.0784  l_bf_epoch: 8.2796  loss_pseudo_inter_epoch: 0.3559  top1_epoch: 0.9517  attention_on_source_epoch: 0.7802
+ 04-27 at 02:23 | epoch: 27    step: 5599   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 11.7132  l_ce_epoch: 0.1695  l_u_epoch: 0.9021  l_div_epoch: -0.0789  l_bf_epoch: 8.2509  loss_pseudo_inter_epoch: 0.3587  top1_epoch: 0.9552  attention_on_source_epoch: 0.7777
+ 04-27 at 02:26 | epoch: 28    step: 5799   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 11.2982  l_ce_epoch: 0.1669  l_u_epoch: 0.8633  l_div_epoch: -0.0787  l_bf_epoch: 8.2403  loss_pseudo_inter_epoch: 0.3611  top1_epoch: 0.9555  attention_on_source_epoch: 0.7789
+ 04-27 at 02:31 | Test Acc (CropDisease_test) = 0.9480 +- 0.0036
+ 04-27 at 02:31 | epoch: 29    step: 5999   :: acc_mean: 0.9480  acc_std: 0.0036  acc_mean_full: 0.9480
+ 04-27 at 02:31 | epoch: 29    step: 5999   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 11.1674  l_ce_epoch: 0.1644  l_u_epoch: 0.8529  l_div_epoch: -0.0754  l_bf_epoch: 8.2593  loss_pseudo_inter_epoch: 0.3517  top1_epoch: 0.9553  attention_on_source_epoch: 0.7777
+ 04-27 at 02:35 | epoch: 30    step: 6199   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 11.4294  l_ce_epoch: 0.1836  l_u_epoch: 0.8591  l_div_epoch: -0.0761  l_bf_epoch: 8.2935  loss_pseudo_inter_epoch: 0.3621  top1_epoch: 0.9505  attention_on_source_epoch: 0.7809
+ 04-27 at 02:38 | epoch: 31    step: 6399   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 11.1194  l_ce_epoch: 0.1733  l_u_epoch: 0.8386  l_div_epoch: -0.0774  l_bf_epoch: 8.2743  loss_pseudo_inter_epoch: 0.3618  top1_epoch: 0.9522  attention_on_source_epoch: 0.7813
+ 04-27 at 02:42 | epoch: 32    step: 6599   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 11.2244  l_ce_epoch: 0.1659  l_u_epoch: 0.8572  l_div_epoch: -0.0753  l_bf_epoch: 8.2649  loss_pseudo_inter_epoch: 0.3499  top1_epoch: 0.9542  attention_on_source_epoch: 0.7818
+ 04-27 at 02:46 | epoch: 33    step: 6799   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 11.2340  l_ce_epoch: 0.1731  l_u_epoch: 0.8506  l_div_epoch: -0.0787  l_bf_epoch: 8.2392  loss_pseudo_inter_epoch: 0.3621  top1_epoch: 0.9533  attention_on_source_epoch: 0.7803
+ 04-27 at 02:50 | Test Acc (CropDisease_test) = 0.9510 +- 0.0036
+ 04-27 at 02:50 | epoch: 34    step: 6999   :: acc_mean: 0.9510  acc_std: 0.0036  acc_mean_full: 0.9510
+ 04-27 at 02:50 | epoch: 34    step: 6999   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 11.0919  l_ce_epoch: 0.1649  l_u_epoch: 0.8452  l_div_epoch: -0.0773  l_bf_epoch: 8.2348  loss_pseudo_inter_epoch: 0.3488  top1_epoch: 0.9552  attention_on_source_epoch: 0.7824
+ 04-27 at 02:54 | epoch: 35    step: 7199   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.8797  l_ce_epoch: 0.1707  l_u_epoch: 0.8182  l_div_epoch: -0.0759  l_bf_epoch: 8.2064  loss_pseudo_inter_epoch: 0.3549  top1_epoch: 0.9526  attention_on_source_epoch: 0.7767
+ 04-27 at 02:58 | epoch: 36    step: 7399   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.5885  l_ce_epoch: 0.1580  l_u_epoch: 0.8021  l_div_epoch: -0.0786  l_bf_epoch: 8.2244  loss_pseudo_inter_epoch: 0.3439  top1_epoch: 0.9570  attention_on_source_epoch: 0.7793
+ 04-27 at 03:01 | epoch: 37    step: 7599   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.8362  l_ce_epoch: 0.1760  l_u_epoch: 0.8089  l_div_epoch: -0.0779  l_bf_epoch: 8.2056  loss_pseudo_inter_epoch: 0.3502  top1_epoch: 0.9505  attention_on_source_epoch: 0.7786
+ 04-27 at 03:05 | epoch: 38    step: 7799   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.7507  l_ce_epoch: 0.1667  l_u_epoch: 0.8098  l_div_epoch: -0.0787  l_bf_epoch: 8.2411  loss_pseudo_inter_epoch: 0.3394  top1_epoch: 0.9542  attention_on_source_epoch: 0.7813
+ 04-27 at 03:10 | Test Acc (CropDisease_test) = 0.9454 +- 0.0037
+ 04-27 at 03:10 | epoch: 39    step: 7999   :: acc_mean: 0.9454  acc_std: 0.0037  acc_mean_full: 0.9454
+ 04-27 at 03:10 | epoch: 39    step: 7999   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.5019  l_ce_epoch: 0.1565  l_u_epoch: 0.7952  l_div_epoch: -0.0792  l_bf_epoch: 8.2343  loss_pseudo_inter_epoch: 0.3393  top1_epoch: 0.9591  attention_on_source_epoch: 0.7800
+ 04-27 at 03:13 | epoch: 40    step: 8199   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.6731  l_ce_epoch: 0.1652  l_u_epoch: 0.8031  l_div_epoch: -0.0801  l_bf_epoch: 8.2540  loss_pseudo_inter_epoch: 0.3465  top1_epoch: 0.9552  attention_on_source_epoch: 0.7773
+ 04-27 at 03:17 | epoch: 41    step: 8399   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.2846  l_ce_epoch: 0.1630  l_u_epoch: 0.7665  l_div_epoch: -0.0764  l_bf_epoch: 8.2469  loss_pseudo_inter_epoch: 0.3458  top1_epoch: 0.9552  attention_on_source_epoch: 0.7827
+ 04-27 at 03:20 | epoch: 42    step: 8599   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.4033  l_ce_epoch: 0.1550  l_u_epoch: 0.7862  l_div_epoch: -0.0797  l_bf_epoch: 8.2320  loss_pseudo_inter_epoch: 0.3510  top1_epoch: 0.9587  attention_on_source_epoch: 0.7827
+ 04-27 at 03:24 | epoch: 43    step: 8799   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.6159  l_ce_epoch: 0.1608  l_u_epoch: 0.8022  l_div_epoch: -0.0801  l_bf_epoch: 8.2007  loss_pseudo_inter_epoch: 0.3472  top1_epoch: 0.9547  attention_on_source_epoch: 0.7803
+ 04-27 at 03:29 | Test Acc (CropDisease_test) = 0.9454 +- 0.0038
+ 04-27 at 03:29 | epoch: 44    step: 8999   :: acc_mean: 0.9454  acc_std: 0.0038  acc_mean_full: 0.9454
+ 04-27 at 03:29 | epoch: 44    step: 8999   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.4996  l_ce_epoch: 0.1598  l_u_epoch: 0.7918  l_div_epoch: -0.0784  l_bf_epoch: 8.2005  loss_pseudo_inter_epoch: 0.3414  top1_epoch: 0.9566  attention_on_source_epoch: 0.7816
+ 04-27 at 03:32 | epoch: 45    step: 9199   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.2318  l_ce_epoch: 0.1630  l_u_epoch: 0.7616  l_div_epoch: -0.0741  l_bf_epoch: 8.1685  loss_pseudo_inter_epoch: 0.3509  top1_epoch: 0.9565  attention_on_source_epoch: 0.7808
+ 04-27 at 03:36 | epoch: 46    step: 9399   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.4628  l_ce_epoch: 0.1626  l_u_epoch: 0.7858  l_div_epoch: -0.0778  l_bf_epoch: 8.1728  loss_pseudo_inter_epoch: 0.3393  top1_epoch: 0.9531  attention_on_source_epoch: 0.7797
+ 04-27 at 03:40 | epoch: 47    step: 9599   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.4247  l_ce_epoch: 0.1594  l_u_epoch: 0.7850  l_div_epoch: -0.0763  l_bf_epoch: 8.2046  loss_pseudo_inter_epoch: 0.3358  top1_epoch: 0.9565  attention_on_source_epoch: 0.7814
+ 04-27 at 03:43 | epoch: 48    step: 9799   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.2209  l_ce_epoch: 0.1600  l_u_epoch: 0.7639  l_div_epoch: -0.0795  l_bf_epoch: 8.1798  loss_pseudo_inter_epoch: 0.3435  top1_epoch: 0.9566  attention_on_source_epoch: 0.7800
+ 04-27 at 03:48 | Test Acc (CropDisease_test) = 0.9497 +- 0.0037
+ 04-27 at 03:48 | epoch: 49    step: 9999   :: acc_mean: 0.9497  acc_std: 0.0037  acc_mean_full: 0.9497
+ 04-27 at 03:48 | epoch: 49    step: 9999   :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.5076  l_ce_epoch: 0.1600  l_u_epoch: 0.7928  l_div_epoch: -0.0791  l_bf_epoch: 8.1689  loss_pseudo_inter_epoch: 0.3395  top1_epoch: 0.9566  attention_on_source_epoch: 0.7815
+ 04-27 at 03:52 | epoch: 50    step: 10199  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.1859  l_ce_epoch: 0.1548  l_u_epoch: 0.7666  l_div_epoch: -0.0750  l_bf_epoch: 8.1339  loss_pseudo_inter_epoch: 0.3335  top1_epoch: 0.9605  attention_on_source_epoch: 0.7801
+ 04-27 at 03:55 | epoch: 51    step: 10399  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.5270  l_ce_epoch: 0.1622  l_u_epoch: 0.7928  l_div_epoch: -0.0798  l_bf_epoch: 8.1655  loss_pseudo_inter_epoch: 0.3375  top1_epoch: 0.9544  attention_on_source_epoch: 0.7802
+ 04-27 at 03:59 | epoch: 52    step: 10599  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.3470  l_ce_epoch: 0.1598  l_u_epoch: 0.7777  l_div_epoch: -0.0768  l_bf_epoch: 8.1552  loss_pseudo_inter_epoch: 0.3295  top1_epoch: 0.9554  attention_on_source_epoch: 0.7811
+ 04-27 at 04:02 | epoch: 53    step: 10799  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.4136  l_ce_epoch: 0.1593  l_u_epoch: 0.7846  l_div_epoch: -0.0793  l_bf_epoch: 8.1653  loss_pseudo_inter_epoch: 0.3306  top1_epoch: 0.9586  attention_on_source_epoch: 0.7805
+ 04-27 at 04:07 | Test Acc (CropDisease_test) = 0.9443 +- 0.0037
+ 04-27 at 04:07 | epoch: 54    step: 10999  :: acc_mean: 0.9443  acc_std: 0.0037  acc_mean_full: 0.9443
+ 04-27 at 04:07 | epoch: 54    step: 10999  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.5057  l_ce_epoch: 0.1638  l_u_epoch: 0.7892  l_div_epoch: -0.0711  l_bf_epoch: 8.1625  loss_pseudo_inter_epoch: 0.3329  top1_epoch: 0.9553  attention_on_source_epoch: 0.7859
+ 04-27 at 04:11 | epoch: 55    step: 11199  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.3079  l_ce_epoch: 0.1553  l_u_epoch: 0.7781  l_div_epoch: -0.0758  l_bf_epoch: 8.1552  loss_pseudo_inter_epoch: 0.3326  top1_epoch: 0.9572  attention_on_source_epoch: 0.7836
+ 04-27 at 04:15 | epoch: 56    step: 11399  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.1490  l_ce_epoch: 0.1608  l_u_epoch: 0.7572  l_div_epoch: -0.0778  l_bf_epoch: 8.1141  loss_pseudo_inter_epoch: 0.3294  top1_epoch: 0.9559  attention_on_source_epoch: 0.7792
+ 04-27 at 04:18 | epoch: 57    step: 11599  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.4610  l_ce_epoch: 0.1593  l_u_epoch: 0.7892  l_div_epoch: -0.0767  l_bf_epoch: 8.1669  loss_pseudo_inter_epoch: 0.3326  top1_epoch: 0.9572  attention_on_source_epoch: 0.7846
+ 04-27 at 04:22 | epoch: 58    step: 11799  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.4381  l_ce_epoch: 0.1619  l_u_epoch: 0.7851  l_div_epoch: -0.0779  l_bf_epoch: 8.1111  loss_pseudo_inter_epoch: 0.3290  top1_epoch: 0.9550  attention_on_source_epoch: 0.7808
+ 04-27 at 04:27 | Test Acc (CropDisease_test) = 0.9446 +- 0.0038
+ 04-27 at 04:27 | epoch: 59    step: 11999  :: acc_mean: 0.9446  acc_std: 0.0038  acc_mean_full: 0.9446
+ 04-27 at 04:27 | epoch: 59    step: 11999  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.4889  l_ce_epoch: 0.1601  l_u_epoch: 0.7916  l_div_epoch: -0.0809  l_bf_epoch: 8.1100  loss_pseudo_inter_epoch: 0.3376  top1_epoch: 0.9579  attention_on_source_epoch: 0.7803
+ 04-27 at 04:30 | epoch: 60    step: 12199  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.1558  l_ce_epoch: 0.1622  l_u_epoch: 0.7562  l_div_epoch: -0.0776  l_bf_epoch: 8.1097  loss_pseudo_inter_epoch: 0.3383  top1_epoch: 0.9542  attention_on_source_epoch: 0.7830
+ 04-27 at 04:34 | epoch: 61    step: 12399  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.3010  l_ce_epoch: 0.1555  l_u_epoch: 0.7778  l_div_epoch: -0.0779  l_bf_epoch: 8.0902  loss_pseudo_inter_epoch: 0.3343  top1_epoch: 0.9590  attention_on_source_epoch: 0.7802
+ 04-27 at 04:38 | epoch: 62    step: 12599  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.1325  l_ce_epoch: 0.1585  l_u_epoch: 0.7579  l_div_epoch: -0.0801  l_bf_epoch: 8.1257  loss_pseudo_inter_epoch: 0.3288  top1_epoch: 0.9568  attention_on_source_epoch: 0.7794
+ 04-27 at 04:41 | epoch: 63    step: 12799  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.4384  l_ce_epoch: 0.1576  l_u_epoch: 0.7899  l_div_epoch: -0.0788  l_bf_epoch: 8.0858  loss_pseudo_inter_epoch: 0.3240  top1_epoch: 0.9574  attention_on_source_epoch: 0.7801
+ 04-27 at 04:46 | Test Acc (CropDisease_test) = 0.9434 +- 0.0040
+ 04-27 at 04:46 | epoch: 64    step: 12999  :: acc_mean: 0.9434  acc_std: 0.0040  acc_mean_full: 0.9434
+ 04-27 at 04:46 | epoch: 64    step: 12999  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.1511  l_ce_epoch: 0.1488  l_u_epoch: 0.7700  l_div_epoch: -0.0785  l_bf_epoch: 8.0647  loss_pseudo_inter_epoch: 0.3293  top1_epoch: 0.9613  attention_on_source_epoch: 0.7805
+ 04-27 at 04:50 | epoch: 65    step: 13199  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.1717  l_ce_epoch: 0.1617  l_u_epoch: 0.7585  l_div_epoch: -0.0774  l_bf_epoch: 8.1084  loss_pseudo_inter_epoch: 0.3339  top1_epoch: 0.9569  attention_on_source_epoch: 0.7841
+ 04-27 at 04:53 | epoch: 66    step: 13399  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.4641  l_ce_epoch: 0.1580  l_u_epoch: 0.7915  l_div_epoch: -0.0779  l_bf_epoch: 8.1078  loss_pseudo_inter_epoch: 0.3314  top1_epoch: 0.9591  attention_on_source_epoch: 0.7859
+ 04-27 at 04:57 | epoch: 67    step: 13599  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.4699  l_ce_epoch: 0.1552  l_u_epoch: 0.7953  l_div_epoch: -0.0800  l_bf_epoch: 8.0710  loss_pseudo_inter_epoch: 0.3313  top1_epoch: 0.9577  attention_on_source_epoch: 0.7805
+ 04-27 at 05:01 | epoch: 68    step: 13799  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.0483  l_ce_epoch: 0.1510  l_u_epoch: 0.7578  l_div_epoch: -0.0828  l_bf_epoch: 8.0625  loss_pseudo_inter_epoch: 0.3249  top1_epoch: 0.9595  attention_on_source_epoch: 0.7804
+ 04-27 at 05:05 | Test Acc (CropDisease_test) = 0.9456 +- 0.0038
+ 04-27 at 05:05 | epoch: 69    step: 13999  :: acc_mean: 0.9456  acc_std: 0.0038  acc_mean_full: 0.9456
+ 04-27 at 05:05 | epoch: 69    step: 13999  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.1300  l_ce_epoch: 0.1514  l_u_epoch: 0.7653  l_div_epoch: -0.0805  l_bf_epoch: 8.0984  loss_pseudo_inter_epoch: 0.3240  top1_epoch: 0.9599  attention_on_source_epoch: 0.7838
+ 04-27 at 05:09 | epoch: 70    step: 14199  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 9.9108  l_ce_epoch: 0.1465  l_u_epoch: 0.7488  l_div_epoch: -0.0796  l_bf_epoch: 8.0537  loss_pseudo_inter_epoch: 0.3213  top1_epoch: 0.9605  attention_on_source_epoch: 0.7824
+ 04-27 at 05:13 | epoch: 71    step: 14399  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 9.7830  l_ce_epoch: 0.1393  l_u_epoch: 0.7438  l_div_epoch: -0.0761  l_bf_epoch: 8.0519  loss_pseudo_inter_epoch: 0.3088  top1_epoch: 0.9617  attention_on_source_epoch: 0.7829
+ 04-27 at 05:16 | epoch: 72    step: 14599  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.0814  l_ce_epoch: 0.1460  l_u_epoch: 0.7661  l_div_epoch: -0.0800  l_bf_epoch: 8.0769  loss_pseudo_inter_epoch: 0.3217  top1_epoch: 0.9590  attention_on_source_epoch: 0.7841
+ 04-27 at 05:20 | epoch: 73    step: 14799  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 9.9947  l_ce_epoch: 0.1486  l_u_epoch: 0.7548  l_div_epoch: -0.0811  l_bf_epoch: 8.0725  loss_pseudo_inter_epoch: 0.3228  top1_epoch: 0.9580  attention_on_source_epoch: 0.7838
+ 04-27 at 05:25 | Test Acc (CropDisease_test) = 0.9456 +- 0.0039
+ 04-27 at 05:25 | epoch: 74    step: 14999  :: acc_mean: 0.9456  acc_std: 0.0039  acc_mean_full: 0.9456
+ 04-27 at 05:25 | epoch: 74    step: 14999  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.3001  l_ce_epoch: 0.1521  l_u_epoch: 0.7817  l_div_epoch: -0.0820  l_bf_epoch: 8.0545  loss_pseudo_inter_epoch: 0.3281  top1_epoch: 0.9575  attention_on_source_epoch: 0.7850
+ 04-27 at 05:28 | epoch: 75    step: 15199  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 9.7339  l_ce_epoch: 0.1446  l_u_epoch: 0.7331  l_div_epoch: -0.0822  l_bf_epoch: 8.0658  loss_pseudo_inter_epoch: 0.3164  top1_epoch: 0.9615  attention_on_source_epoch: 0.7852
+ 04-27 at 05:32 | epoch: 76    step: 15399  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.0719  l_ce_epoch: 0.1459  l_u_epoch: 0.7662  l_div_epoch: -0.0807  l_bf_epoch: 8.0475  loss_pseudo_inter_epoch: 0.3081  top1_epoch: 0.9620  attention_on_source_epoch: 0.7857
+ 04-27 at 05:36 | epoch: 77    step: 15599  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.2961  l_ce_epoch: 0.1645  l_u_epoch: 0.7695  l_div_epoch: -0.0797  l_bf_epoch: 8.0051  loss_pseudo_inter_epoch: 0.3272  top1_epoch: 0.9538  attention_on_source_epoch: 0.7811
+ 04-27 at 05:39 | epoch: 78    step: 15799  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.0973  l_ce_epoch: 0.1571  l_u_epoch: 0.7570  l_div_epoch: -0.0799  l_bf_epoch: 8.0413  loss_pseudo_inter_epoch: 0.3203  top1_epoch: 0.9563  attention_on_source_epoch: 0.7857
+ 04-27 at 05:44 | Test Acc (CropDisease_test) = 0.9458 +- 0.0040
+ 04-27 at 05:44 | epoch: 79    step: 15999  :: acc_mean: 0.9458  acc_std: 0.0040  acc_mean_full: 0.9458
+ 04-27 at 05:44 | epoch: 79    step: 15999  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.4276  l_ce_epoch: 0.1556  l_u_epoch: 0.7916  l_div_epoch: -0.0835  l_bf_epoch: 8.0240  loss_pseudo_inter_epoch: 0.3236  top1_epoch: 0.9576  attention_on_source_epoch: 0.7859
+ 04-27 at 05:48 | epoch: 80    step: 16199  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.0273  l_ce_epoch: 0.1584  l_u_epoch: 0.7488  l_div_epoch: -0.0800  l_bf_epoch: 7.9979  loss_pseudo_inter_epoch: 0.3268  top1_epoch: 0.9555  attention_on_source_epoch: 0.7833
+ 04-27 at 05:51 | epoch: 81    step: 16399  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.2577  l_ce_epoch: 0.1620  l_u_epoch: 0.7678  l_div_epoch: -0.0821  l_bf_epoch: 8.0169  loss_pseudo_inter_epoch: 0.3310  top1_epoch: 0.9555  attention_on_source_epoch: 0.7834
+ 04-27 at 05:55 | epoch: 82    step: 16599  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.0512  l_ce_epoch: 0.1738  l_u_epoch: 0.7363  l_div_epoch: -0.0816  l_bf_epoch: 7.9739  loss_pseudo_inter_epoch: 0.3220  top1_epoch: 0.9529  attention_on_source_epoch: 0.7825
+ 04-27 at 05:58 | epoch: 83    step: 16799  :: lr-SGD: 0.0015  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 10.1447  l_ce_epoch: 0.1673  l_u_epoch: 0.7513  l_div_epoch: -0.0803  l_bf_epoch: 7.9799  loss_pseudo_inter_epoch: 0.3377  top1_epoch: 0.9534  attention_on_source_epoch: 0.7816
+ 04-27 at 06:03 | Test Acc (CropDisease_test) = 0.9453 +- 0.0038
+ 04-27 at 06:03 | epoch: 84    step: 16999  :: acc_mean: 0.9453  acc_std: 0.0038  acc_mean_full: 0.9453
+ 04-27 at 06:03 | epoch: 84    step: 16999  :: lr-SGD: 0.0002  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 9.2646  l_ce_epoch: 0.1384  l_u_epoch: 0.6942  l_div_epoch: -0.0819  l_bf_epoch: 7.9803  loss_pseudo_inter_epoch: 0.2978  top1_epoch: 0.9638  attention_on_source_epoch: 0.7803
+ 04-27 at 06:07 | epoch: 85    step: 17199  :: lr-SGD: 0.0002  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 9.1627  l_ce_epoch: 0.1176  l_u_epoch: 0.7057  l_div_epoch: -0.0817  l_bf_epoch: 7.9595  loss_pseudo_inter_epoch: 0.2830  top1_epoch: 0.9708  attention_on_source_epoch: 0.7790
+ 04-27 at 06:11 | epoch: 86    step: 17399  :: lr-SGD: 0.0002  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 9.1374  l_ce_epoch: 0.1147  l_u_epoch: 0.7070  l_div_epoch: -0.0843  l_bf_epoch: 7.9351  loss_pseudo_inter_epoch: 0.2706  top1_epoch: 0.9701  attention_on_source_epoch: 0.7773
+ 04-27 at 06:14 | epoch: 87    step: 17599  :: lr-SGD: 0.0002  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 8.9742  l_ce_epoch: 0.1166  l_u_epoch: 0.6883  l_div_epoch: -0.0858  l_bf_epoch: 7.9297  loss_pseudo_inter_epoch: 0.2799  top1_epoch: 0.9692  attention_on_source_epoch: 0.7772
+ 04-27 at 06:18 | epoch: 88    step: 17799  :: lr-SGD: 0.0002  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 9.0935  l_ce_epoch: 0.1192  l_u_epoch: 0.6982  l_div_epoch: -0.0844  l_bf_epoch: 7.9168  loss_pseudo_inter_epoch: 0.2741  top1_epoch: 0.9684  attention_on_source_epoch: 0.7753
+ 04-27 at 06:22 | Test Acc (CropDisease_test) = 0.9465 +- 0.0038
+ 04-27 at 06:22 | epoch: 89    step: 17999  :: acc_mean: 0.9465  acc_std: 0.0038  acc_mean_full: 0.9465
+ 04-27 at 06:22 | epoch: 89    step: 17999  :: lr-SGD: 0.0002  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 8.8927  l_ce_epoch: 0.1043  l_u_epoch: 0.6931  l_div_epoch: -0.0843  l_bf_epoch: 7.9328  loss_pseudo_inter_epoch: 0.2678  top1_epoch: 0.9737  attention_on_source_epoch: 0.7766
+ 04-27 at 06:26 | epoch: 90    step: 18199  :: lr-SGD: 0.0002  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 9.0533  l_ce_epoch: 0.1068  l_u_epoch: 0.7070  l_div_epoch: -0.0842  l_bf_epoch: 7.9472  loss_pseudo_inter_epoch: 0.2584  top1_epoch: 0.9731  attention_on_source_epoch: 0.7768
+ 04-27 at 06:30 | epoch: 91    step: 18399  :: lr-SGD: 0.0002  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 9.0189  l_ce_epoch: 0.1108  l_u_epoch: 0.6999  l_div_epoch: -0.0846  l_bf_epoch: 7.9205  loss_pseudo_inter_epoch: 0.2577  top1_epoch: 0.9723  attention_on_source_epoch: 0.7763
+ 04-27 at 06:33 | epoch: 92    step: 18599  :: lr-SGD: 0.0002  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 8.8509  l_ce_epoch: 0.1085  l_u_epoch: 0.6853  l_div_epoch: -0.0847  l_bf_epoch: 7.9383  loss_pseudo_inter_epoch: 0.2556  top1_epoch: 0.9724  attention_on_source_epoch: 0.7770
+ 04-27 at 06:37 | epoch: 93    step: 18799  :: lr-SGD: 0.0002  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 8.7815  l_ce_epoch: 0.1065  l_u_epoch: 0.6802  l_div_epoch: -0.0842  l_bf_epoch: 7.9128  loss_pseudo_inter_epoch: 0.2634  top1_epoch: 0.9721  attention_on_source_epoch: 0.7757
+ 04-27 at 06:42 | Test Acc (CropDisease_test) = 0.9472 +- 0.0040
+ 04-27 at 06:42 | epoch: 94    step: 18999  :: acc_mean: 0.9472  acc_std: 0.0040  acc_mean_full: 0.9472
+ 04-27 at 06:42 | epoch: 94    step: 18999  :: lr-SGD: 0.0002  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 9.0092  l_ce_epoch: 0.1048  l_u_epoch: 0.7046  l_div_epoch: -0.0852  l_bf_epoch: 7.9302  loss_pseudo_inter_epoch: 0.2613  top1_epoch: 0.9719  attention_on_source_epoch: 0.7749
+ 04-27 at 06:45 | epoch: 95    step: 19199  :: lr-SGD: 0.0002  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 8.8803  l_ce_epoch: 0.1098  l_u_epoch: 0.6869  l_div_epoch: -0.0847  l_bf_epoch: 7.9087  loss_pseudo_inter_epoch: 0.2627  top1_epoch: 0.9702  attention_on_source_epoch: 0.7766
+ 04-27 at 06:49 | epoch: 96    step: 19399  :: lr-SGD: 0.0002  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 9.1653  l_ce_epoch: 0.1121  l_u_epoch: 0.7129  l_div_epoch: -0.0853  l_bf_epoch: 7.9020  loss_pseudo_inter_epoch: 0.2676  top1_epoch: 0.9716  attention_on_source_epoch: 0.7757
+ 04-27 at 06:53 | epoch: 97    step: 19599  :: lr-SGD: 0.0002  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 8.9349  l_ce_epoch: 0.1026  l_u_epoch: 0.6996  l_div_epoch: -0.0839  l_bf_epoch: 7.9047  loss_pseudo_inter_epoch: 0.2623  top1_epoch: 0.9740  attention_on_source_epoch: 0.7759
+ 04-27 at 06:56 | epoch: 98    step: 19799  :: lr-SGD: 0.0002  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 9.0107  l_ce_epoch: 0.1139  l_u_epoch: 0.6954  l_div_epoch: -0.0846  l_bf_epoch: 7.9130  loss_pseudo_inter_epoch: 0.2697  top1_epoch: 0.9698  attention_on_source_epoch: 0.7771
+ 04-27 at 07:01 | Test Acc (CropDisease_test) = 0.9461 +- 0.0038
+ 04-27 at 07:01 | epoch: 99    step: 19999  :: acc_mean: 0.9461  acc_std: 0.0038  acc_mean_full: 0.9461
+ 04-27 at 07:01 | epoch: 99    step: 19999  :: lr-SGD: 0.0002  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 8.8741  l_ce_epoch: 0.1029  l_u_epoch: 0.6933  l_div_epoch: -0.0843  l_bf_epoch: 7.9010  loss_pseudo_inter_epoch: 0.2613  top1_epoch: 0.9733  attention_on_source_epoch: 0.7757
+ 04-27 at 07:05 | epoch: 100   step: 20199  :: lr-SGD: 0.0002  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 8.9576  l_ce_epoch: 0.1059  l_u_epoch: 0.6985  l_div_epoch: -0.0845  l_bf_epoch: 7.8975  loss_pseudo_inter_epoch: 0.2636  top1_epoch: 0.9729  attention_on_source_epoch: 0.7741
+ 04-27 at 07:08 | epoch: 101   step: 20399  :: lr-SGD: 0.0002  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 8.9861  l_ce_epoch: 0.1032  l_u_epoch: 0.7046  l_div_epoch: -0.0850  l_bf_epoch: 7.8840  loss_pseudo_inter_epoch: 0.2548  top1_epoch: 0.9753  attention_on_source_epoch: 0.7747
+ 04-27 at 07:12 | epoch: 102   step: 20599  :: lr-SGD: 0.0002  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 8.9200  l_ce_epoch: 0.0969  l_u_epoch: 0.7043  l_div_epoch: -0.0870  l_bf_epoch: 7.8943  loss_pseudo_inter_epoch: 0.2549  top1_epoch: 0.9749  attention_on_source_epoch: 0.7740
+ 04-27 at 07:16 | epoch: 103   step: 20799  :: lr-SGD: 0.0002  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 8.9677  l_ce_epoch: 0.1043  l_u_epoch: 0.7013  l_div_epoch: -0.0862  l_bf_epoch: 7.9058  loss_pseudo_inter_epoch: 0.2594  top1_epoch: 0.9718  attention_on_source_epoch: 0.7775
+ 04-27 at 07:20 | Test Acc (CropDisease_test) = 0.9483 +- 0.0038
+ 04-27 at 07:20 | epoch: 104   step: 20999  :: acc_mean: 0.9483  acc_std: 0.0038  acc_mean_full: 0.9483
+ 04-27 at 07:20 | epoch: 104   step: 20999  :: lr-SGD: 0.0002  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 8.8845  l_ce_epoch: 0.1021  l_u_epoch: 0.6954  l_div_epoch: -0.0854  l_bf_epoch: 7.9031  loss_pseudo_inter_epoch: 0.2561  top1_epoch: 0.9727  attention_on_source_epoch: 0.7766
+ 04-27 at 07:24 | epoch: 105   step: 21199  :: lr-SGD: 0.0002  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 9.0050  l_ce_epoch: 0.0983  l_u_epoch: 0.7114  l_div_epoch: -0.0857  l_bf_epoch: 7.9062  loss_pseudo_inter_epoch: 0.2519  top1_epoch: 0.9745  attention_on_source_epoch: 0.7744
+ 04-27 at 07:28 | epoch: 106   step: 21399  :: lr-SGD: 0.0002  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 9.0291  l_ce_epoch: 0.1001  l_u_epoch: 0.7120  l_div_epoch: -0.0860  l_bf_epoch: 7.8846  loss_pseudo_inter_epoch: 0.2570  top1_epoch: 0.9743  attention_on_source_epoch: 0.7745
+ 04-27 at 07:31 | epoch: 107   step: 21599  :: lr-SGD: 0.0002  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 8.9485  l_ce_epoch: 0.1075  l_u_epoch: 0.6966  l_div_epoch: -0.0866  l_bf_epoch: 7.8845  loss_pseudo_inter_epoch: 0.2565  top1_epoch: 0.9728  attention_on_source_epoch: 0.7762
+ 04-27 at 07:35 | epoch: 108   step: 21799  :: lr-SGD: 0.0000  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 9.2565  l_ce_epoch: 0.1004  l_u_epoch: 0.7345  l_div_epoch: -0.0881  l_bf_epoch: 7.8662  loss_pseudo_inter_epoch: 0.2604  top1_epoch: 0.9743  attention_on_source_epoch: 0.7742
+ 04-27 at 07:40 | Test Acc (CropDisease_test) = 0.9529 +- 0.0033
+ 04-27 at 07:40 | epoch: 109   step: 21999  :: acc_mean: 0.9529  acc_std: 0.0033  acc_mean_full: 0.9529
+ 04-27 at 07:40 | epoch: 109   step: 21999  :: lr-SGD: 0.0000  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 9.2980  l_ce_epoch: 0.0980  l_u_epoch: 0.7409  l_div_epoch: -0.0882  l_bf_epoch: 7.8942  loss_pseudo_inter_epoch: 0.2562  top1_epoch: 0.9755  attention_on_source_epoch: 0.7759
+ 04-27 at 07:43 | epoch: 110   step: 22199  :: lr-SGD: 0.0000  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 8.9846  l_ce_epoch: 0.1052  l_u_epoch: 0.7025  l_div_epoch: -0.0892  l_bf_epoch: 7.8943  loss_pseudo_inter_epoch: 0.2540  top1_epoch: 0.9712  attention_on_source_epoch: 0.7755
+ 04-27 at 07:47 | epoch: 111   step: 22399  :: lr-SGD: 0.0000  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 9.0215  l_ce_epoch: 0.1003  l_u_epoch: 0.7112  l_div_epoch: -0.0886  l_bf_epoch: 7.8774  loss_pseudo_inter_epoch: 0.2546  top1_epoch: 0.9752  attention_on_source_epoch: 0.7737
+ 04-27 at 07:51 | epoch: 112   step: 22599  :: lr-SGD: 0.0000  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 9.3008  l_ce_epoch: 0.1010  l_u_epoch: 0.7382  l_div_epoch: -0.0890  l_bf_epoch: 7.8872  loss_pseudo_inter_epoch: 0.2581  top1_epoch: 0.9746  attention_on_source_epoch: 0.7735
+ 04-27 at 07:54 | epoch: 113   step: 22799  :: lr-SGD: 0.0000  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 9.0368  l_ce_epoch: 0.1004  l_u_epoch: 0.7127  l_div_epoch: -0.0871  l_bf_epoch: 7.9007  loss_pseudo_inter_epoch: 0.2478  top1_epoch: 0.9741  attention_on_source_epoch: 0.7768
+ 04-27 at 07:59 | Test Acc (CropDisease_test) = 0.9474 +- 0.0037
+ 04-27 at 07:59 | epoch: 114   step: 22999  :: acc_mean: 0.9474  acc_std: 0.0037  acc_mean_full: 0.9474
+ 04-27 at 07:59 | epoch: 114   step: 22999  :: lr-SGD: 0.0000  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 9.1653  l_ce_epoch: 0.1041  l_u_epoch: 0.7221  l_div_epoch: -0.0881  l_bf_epoch: 7.8671  loss_pseudo_inter_epoch: 0.2507  top1_epoch: 0.9732  attention_on_source_epoch: 0.7748
+ 04-27 at 08:03 | epoch: 115   step: 23199  :: lr-SGD: 0.0000  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 9.0119  l_ce_epoch: 0.0952  l_u_epoch: 0.7155  l_div_epoch: -0.0877  l_bf_epoch: 7.8762  loss_pseudo_inter_epoch: 0.2521  top1_epoch: 0.9756  attention_on_source_epoch: 0.7750
+ 04-27 at 08:06 | epoch: 116   step: 23399  :: lr-SGD: 0.0000  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 9.0951  l_ce_epoch: 0.0957  l_u_epoch: 0.7233  l_div_epoch: -0.0881  l_bf_epoch: 7.8907  loss_pseudo_inter_epoch: 0.2513  top1_epoch: 0.9761  attention_on_source_epoch: 0.7762
+ 04-27 at 08:10 | epoch: 117   step: 23599  :: lr-SGD: 0.0000  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 8.9711  l_ce_epoch: 0.0979  l_u_epoch: 0.7086  l_div_epoch: -0.0861  l_bf_epoch: 7.8834  loss_pseudo_inter_epoch: 0.2538  top1_epoch: 0.9747  attention_on_source_epoch: 0.7749
+ 04-27 at 08:14 | epoch: 118   step: 23799  :: lr-SGD: 0.0000  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 8.9469  l_ce_epoch: 0.0944  l_u_epoch: 0.7099  l_div_epoch: -0.0879  l_bf_epoch: 7.8890  loss_pseudo_inter_epoch: 0.2477  top1_epoch: 0.9763  attention_on_source_epoch: 0.7760
+ 04-27 at 08:18 | Test Acc (CropDisease_test) = 0.9466 +- 0.0038
+ 04-27 at 08:18 | epoch: 119   step: 23999  :: acc_mean: 0.9466  acc_std: 0.0038  acc_mean_full: 0.9466
+ 04-27 at 08:18 | epoch: 119   step: 23999  :: lr-SGD: 0.0000  l3_epoch: 1.0000  l2_epoch: 1.0000  loss_train_epoch: 9.0130  l_ce_epoch: 0.1008  l_u_epoch: 0.7098  l_div_epoch: -0.0868  l_bf_epoch: 7.8888  loss_pseudo_inter_epoch: 0.2536  top1_epoch: 0.9748  attention_on_source_epoch: 0.7753

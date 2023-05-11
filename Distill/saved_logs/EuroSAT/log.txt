@@ -1,0 +1,723 @@
+ 04-26 at 19:48 | backbone: resnet10
+model_name: base
+model_args: null
+linear_bn: false
+linear_bn_affine: false
+suffix: ''
+source_data: miniImageNet
+disable_validation: false
+seed: 0
+ckpt: ./ckpt/EuroSAT_426/best.ckpt
+load_base: true
+load_flexible: false
+resume: false
+pretrained: false
+data:
+  disable_validation: false
+  dataset: null
+  val_dataset: null
+  test_dataset: EuroSAT_test
+  image_size: 224
+  batch_size: 64
+  val_batch_size: null
+  num_classes: null
+  split_fraction: 0.2
+  normalize_type: imagenet
+  train_aug: 'true'
+  val_aug: few_shot_test
+  train_split_type: null
+  val_split_type: null
+  seed: 0
+  split_seed: 0
+  num_workers: 6
+  shuffle_val: false
+  limit_train_data: null
+  replica_rank: null
+  num_replica: 1
+  n_way: 5
+  n_shot: 5
+  n_query: 15
+  num_episodes: 600
+trainer:
+  logger: false
+  checkpoint_callback: false
+  default_root_dir: null
+  num_nodes: 1
+  tpu_cores: null
+  check_val_every_n_epoch: 5
+  fast_dev_run: false
+  limit_train_batches: 1.0
+  limit_val_batches: 1.0
+  limit_test_batches: 1.0
+  accelerator: null
+  sync_batchnorm: false
+  num_sanity_val_steps: 0
+  resume_from_checkpoint: null
+  benchmark: false
+  reload_dataloaders_every_epoch: false
+  terminate_on_nan: false
+  auto_scale_batch_size: false
+  automatic_optimization: null
+  progress_bar_refresh_rate: 0
+  log_every_n_steps: 5
+  replace_sampler_ddp: false
+  weights_save_path: ckpt/base
+  max_epochs: 100
+  gpus: 1
+  deterministic: true
+disable_logfile: false
+logger:
+  _target_: utils.custom_logger.CustomLogger
+  name: base
+  version: null
+  test: true
+  save_dir: logs
+  disable_logfile: false
+system_name: few_shot
+support_batch_size: 5
+support_aug: few_shot_query
+support_repeat: 1
+query_aug: null
+test: true
+eval_mode: few_shot
+n_way: 5
+n_shot: 5
+n_query: 15
+print_val: true
+launcher:
+  time: '6'
+  name: local
+  gpus: 1
+eval:
+  fine_tune:
+    name: LR
+    use_norm: false
+    freeze_bn: false
+    last_k: None
+    post_train:
+      reset_head: true
+      freeze_backbone: false
+      use_norm: false
+      optimizer:
+        _target_: torch.optim.SGD
+        lr: 0.01
+        momentum: 0.9
+        dampening: 0
+        weight_decay: 0
+        nesterov: false
+    pre_train:
+      optimizer:
+        _target_: torch.optim.SGD
+        lr: 0.01
+        momentum: 0.9
+        dampening: 0
+        weight_decay: 0
+        nesterov: false
+scheduler: {}
+callbacks: {}
+
+ 04-26 at 19:48 | loading indices from data/cache_cdfsl/EuroSAT_indices_partial_test_0.2_0.npy
+ 04-26 at 19:48 | loading indices from data/cache_cdfsl/EuroSATtest_fs_indices__partial_0.2_0.npy
+ 04-26 at 19:48 | loaded dataset EuroSAT_test:: #class: 10, #data: 21600
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (0) : 0.8533, , acc: 0.8533, acc_mean: 0.8533
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (1) : 0.8667, , acc: 0.8667, acc_mean: 0.8600
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (2) : 0.9200, , acc: 0.9200, acc_mean: 0.8800
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (3) : 0.9467, , acc: 0.9467, acc_mean: 0.8967
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (4) : 0.9333, , acc: 0.9333, acc_mean: 0.9040
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (5) : 0.8667, , acc: 0.8667, acc_mean: 0.8978
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (6) : 0.9333, , acc: 0.9333, acc_mean: 0.9029
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (7) : 0.8267, , acc: 0.8267, acc_mean: 0.8933
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (8) : 0.7067, , acc: 0.7067, acc_mean: 0.8726
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (9) : 0.9067, , acc: 0.9067, acc_mean: 0.8760
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (10) : 0.8800, , acc: 0.8800, acc_mean: 0.8764
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (11) : 0.8800, , acc: 0.8800, acc_mean: 0.8767
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (12) : 0.8533, , acc: 0.8533, acc_mean: 0.8749
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (13) : 0.8667, , acc: 0.8667, acc_mean: 0.8743
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (14) : 0.9600, , acc: 0.9600, acc_mean: 0.8800
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (15) : 0.8000, , acc: 0.8000, acc_mean: 0.8750
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (16) : 0.8933, , acc: 0.8933, acc_mean: 0.8761
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (17) : 0.9200, , acc: 0.9200, acc_mean: 0.8785
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (18) : 0.8800, , acc: 0.8800, acc_mean: 0.8786
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (19) : 0.9467, , acc: 0.9467, acc_mean: 0.8820
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (20) : 0.9333, , acc: 0.9333, acc_mean: 0.8844
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (21) : 0.9200, , acc: 0.9200, acc_mean: 0.8861
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (22) : 0.9200, , acc: 0.9200, acc_mean: 0.8875
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (23) : 0.8400, , acc: 0.8400, acc_mean: 0.8856
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (24) : 0.8667, , acc: 0.8667, acc_mean: 0.8848
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (25) : 0.8000, , acc: 0.8000, acc_mean: 0.8815
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (26) : 0.9467, , acc: 0.9467, acc_mean: 0.8840
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (27) : 0.9333, , acc: 0.9333, acc_mean: 0.8857
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (28) : 0.9200, , acc: 0.9200, acc_mean: 0.8869
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (29) : 0.8667, , acc: 0.8667, acc_mean: 0.8862
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (30) : 0.8267, , acc: 0.8267, acc_mean: 0.8843
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (31) : 0.8133, , acc: 0.8133, acc_mean: 0.8821
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (32) : 0.7600, , acc: 0.7600, acc_mean: 0.8784
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (33) : 0.8000, , acc: 0.8000, acc_mean: 0.8761
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (34) : 0.8533, , acc: 0.8533, acc_mean: 0.8754
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (35) : 0.9733, , acc: 0.9733, acc_mean: 0.8781
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (36) : 0.8667, , acc: 0.8667, acc_mean: 0.8778
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (37) : 0.8133, , acc: 0.8133, acc_mean: 0.8761
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (38) : 0.9333, , acc: 0.9333, acc_mean: 0.8776
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (39) : 0.9733, , acc: 0.9733, acc_mean: 0.8800
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (40) : 0.7867, , acc: 0.7867, acc_mean: 0.8777
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (41) : 0.8133, , acc: 0.8133, acc_mean: 0.8762
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (42) : 0.8533, , acc: 0.8533, acc_mean: 0.8757
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (43) : 0.8933, , acc: 0.8933, acc_mean: 0.8761
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (44) : 0.9600, , acc: 0.9600, acc_mean: 0.8779
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (45) : 0.8933, , acc: 0.8933, acc_mean: 0.8783
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (46) : 0.7733, , acc: 0.7733, acc_mean: 0.8760
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (47) : 0.8133, , acc: 0.8133, acc_mean: 0.8747
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (48) : 0.9333, , acc: 0.9333, acc_mean: 0.8759
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (49) : 0.9200, , acc: 0.9200, acc_mean: 0.8768
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (50) : 0.9600, , acc: 0.9600, acc_mean: 0.8784
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (51) : 0.8933, , acc: 0.8933, acc_mean: 0.8787
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (52) : 0.9067, , acc: 0.9067, acc_mean: 0.8792
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (53) : 0.8133, , acc: 0.8133, acc_mean: 0.8780
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (54) : 0.8800, , acc: 0.8800, acc_mean: 0.8781
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (55) : 0.9200, , acc: 0.9200, acc_mean: 0.8788
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (56) : 0.7200, , acc: 0.7200, acc_mean: 0.8760
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (57) : 0.9333, , acc: 0.9333, acc_mean: 0.8770
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (58) : 0.9600, , acc: 0.9600, acc_mean: 0.8784
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (59) : 0.9067, , acc: 0.9067, acc_mean: 0.8789
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (60) : 0.8667, , acc: 0.8667, acc_mean: 0.8787
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (61) : 0.8400, , acc: 0.8400, acc_mean: 0.8781
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (62) : 0.8133, , acc: 0.8133, acc_mean: 0.8770
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (63) : 0.8533, , acc: 0.8533, acc_mean: 0.8767
+ 04-26 at 19:48 | val :: (EuroSAT_test) : (64) : 0.8933, , acc: 0.8933, acc_mean: 0.8769
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (65) : 0.8800, , acc: 0.8800, acc_mean: 0.8770
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (66) : 0.8933, , acc: 0.8933, acc_mean: 0.8772
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (67) : 0.8800, , acc: 0.8800, acc_mean: 0.8773
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (68) : 0.9067, , acc: 0.9067, acc_mean: 0.8777
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (69) : 0.8267, , acc: 0.8267, acc_mean: 0.8770
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (70) : 0.7467, , acc: 0.7467, acc_mean: 0.8751
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (71) : 0.9467, , acc: 0.9467, acc_mean: 0.8761
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (72) : 0.9467, , acc: 0.9467, acc_mean: 0.8771
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (73) : 0.8800, , acc: 0.8800, acc_mean: 0.8771
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (74) : 0.9200, , acc: 0.9200, acc_mean: 0.8777
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (75) : 0.8533, , acc: 0.8533, acc_mean: 0.8774
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (76) : 0.9200, , acc: 0.9200, acc_mean: 0.8779
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (77) : 0.8800, , acc: 0.8800, acc_mean: 0.8779
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (78) : 0.8667, , acc: 0.8667, acc_mean: 0.8778
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (79) : 0.8667, , acc: 0.8667, acc_mean: 0.8777
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (80) : 0.8667, , acc: 0.8667, acc_mean: 0.8775
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (81) : 0.8533, , acc: 0.8533, acc_mean: 0.8772
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (82) : 0.6400, , acc: 0.6400, acc_mean: 0.8744
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (83) : 0.7867, , acc: 0.7867, acc_mean: 0.8733
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (84) : 0.8267, , acc: 0.8267, acc_mean: 0.8728
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (85) : 0.8933, , acc: 0.8933, acc_mean: 0.8730
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (86) : 0.8133, , acc: 0.8133, acc_mean: 0.8723
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (87) : 0.7467, , acc: 0.7467, acc_mean: 0.8709
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (88) : 0.8667, , acc: 0.8667, acc_mean: 0.8709
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (89) : 0.9333, , acc: 0.9333, acc_mean: 0.8716
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (90) : 0.8933, , acc: 0.8933, acc_mean: 0.8718
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (91) : 0.8267, , acc: 0.8267, acc_mean: 0.8713
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (92) : 0.7067, , acc: 0.7067, acc_mean: 0.8695
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (93) : 0.9067, , acc: 0.9067, acc_mean: 0.8699
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (94) : 0.7867, , acc: 0.7867, acc_mean: 0.8691
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (95) : 0.9067, , acc: 0.9067, acc_mean: 0.8694
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (96) : 0.8933, , acc: 0.8933, acc_mean: 0.8697
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (97) : 0.8533, , acc: 0.8533, acc_mean: 0.8695
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (98) : 0.8400, , acc: 0.8400, acc_mean: 0.8692
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (99) : 0.8800, , acc: 0.8800, acc_mean: 0.8693
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (100) : 0.9200, , acc: 0.9200, acc_mean: 0.8698
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (101) : 0.9067, , acc: 0.9067, acc_mean: 0.8702
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (102) : 0.8533, , acc: 0.8533, acc_mean: 0.8700
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (103) : 0.9733, , acc: 0.9733, acc_mean: 0.8710
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (104) : 0.8533, , acc: 0.8533, acc_mean: 0.8709
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (105) : 0.9200, , acc: 0.9200, acc_mean: 0.8713
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (106) : 0.7467, , acc: 0.7467, acc_mean: 0.8702
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (107) : 0.9333, , acc: 0.9333, acc_mean: 0.8707
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (108) : 0.9200, , acc: 0.9200, acc_mean: 0.8712
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (109) : 0.9067, , acc: 0.9067, acc_mean: 0.8715
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (110) : 0.8800, , acc: 0.8800, acc_mean: 0.8716
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (111) : 0.8267, , acc: 0.8267, acc_mean: 0.8712
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (112) : 0.9467, , acc: 0.9467, acc_mean: 0.8719
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (113) : 0.9067, , acc: 0.9067, acc_mean: 0.8722
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (114) : 0.8933, , acc: 0.8933, acc_mean: 0.8723
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (115) : 0.7600, , acc: 0.7600, acc_mean: 0.8714
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (116) : 0.6933, , acc: 0.6933, acc_mean: 0.8699
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (117) : 0.8267, , acc: 0.8267, acc_mean: 0.8695
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (118) : 0.8667, , acc: 0.8667, acc_mean: 0.8695
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (119) : 0.8933, , acc: 0.8933, acc_mean: 0.8697
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (120) : 0.8667, , acc: 0.8667, acc_mean: 0.8696
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (121) : 0.9067, , acc: 0.9067, acc_mean: 0.8699
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (122) : 0.9200, , acc: 0.9200, acc_mean: 0.8704
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (123) : 0.9333, , acc: 0.9333, acc_mean: 0.8709
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (124) : 0.8667, , acc: 0.8667, acc_mean: 0.8708
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (125) : 0.9333, , acc: 0.9333, acc_mean: 0.8713
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (126) : 0.7600, , acc: 0.7600, acc_mean: 0.8704
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (127) : 0.8933, , acc: 0.8933, acc_mean: 0.8706
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (128) : 0.9733, , acc: 0.9733, acc_mean: 0.8714
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (129) : 0.8133, , acc: 0.8133, acc_mean: 0.8710
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (130) : 0.8400, , acc: 0.8400, acc_mean: 0.8707
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (131) : 0.9333, , acc: 0.9333, acc_mean: 0.8712
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (132) : 0.8933, , acc: 0.8933, acc_mean: 0.8714
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (133) : 0.8267, , acc: 0.8267, acc_mean: 0.8710
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (134) : 0.8000, , acc: 0.8000, acc_mean: 0.8705
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (135) : 0.8400, , acc: 0.8400, acc_mean: 0.8703
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (136) : 0.9333, , acc: 0.9333, acc_mean: 0.8708
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (137) : 0.8533, , acc: 0.8533, acc_mean: 0.8706
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (138) : 0.8800, , acc: 0.8800, acc_mean: 0.8707
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (139) : 0.9467, , acc: 0.9467, acc_mean: 0.8712
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (140) : 0.8400, , acc: 0.8400, acc_mean: 0.8710
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (141) : 0.9067, , acc: 0.9067, acc_mean: 0.8713
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (142) : 0.9467, , acc: 0.9467, acc_mean: 0.8718
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (143) : 0.9200, , acc: 0.9200, acc_mean: 0.8721
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (144) : 0.8400, , acc: 0.8400, acc_mean: 0.8719
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (145) : 0.8800, , acc: 0.8800, acc_mean: 0.8720
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (146) : 0.8400, , acc: 0.8400, acc_mean: 0.8717
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (147) : 0.9467, , acc: 0.9467, acc_mean: 0.8723
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (148) : 0.8667, , acc: 0.8667, acc_mean: 0.8722
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (149) : 0.9333, , acc: 0.9333, acc_mean: 0.8726
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (150) : 0.8400, , acc: 0.8400, acc_mean: 0.8724
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (151) : 0.8800, , acc: 0.8800, acc_mean: 0.8725
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (152) : 0.8800, , acc: 0.8800, acc_mean: 0.8725
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (153) : 0.8933, , acc: 0.8933, acc_mean: 0.8726
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (154) : 0.8000, , acc: 0.8000, acc_mean: 0.8722
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (155) : 0.8400, , acc: 0.8400, acc_mean: 0.8720
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (156) : 0.8133, , acc: 0.8133, acc_mean: 0.8716
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (157) : 0.8267, , acc: 0.8267, acc_mean: 0.8713
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (158) : 0.8667, , acc: 0.8667, acc_mean: 0.8713
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (159) : 0.8533, , acc: 0.8533, acc_mean: 0.8712
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (160) : 0.8400, , acc: 0.8400, acc_mean: 0.8710
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (161) : 0.8667, , acc: 0.8667, acc_mean: 0.8709
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (162) : 0.9067, , acc: 0.9067, acc_mean: 0.8712
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (163) : 0.8667, , acc: 0.8667, acc_mean: 0.8711
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (164) : 0.9200, , acc: 0.9200, acc_mean: 0.8714
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (165) : 0.8267, , acc: 0.8267, acc_mean: 0.8712
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (166) : 0.8667, , acc: 0.8667, acc_mean: 0.8711
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (167) : 0.7600, , acc: 0.7600, acc_mean: 0.8705
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (168) : 0.9600, , acc: 0.9600, acc_mean: 0.8710
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (169) : 0.8667, , acc: 0.8667, acc_mean: 0.8710
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (170) : 0.9067, , acc: 0.9067, acc_mean: 0.8712
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (171) : 0.9467, , acc: 0.9467, acc_mean: 0.8716
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (172) : 0.7333, , acc: 0.7333, acc_mean: 0.8708
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (173) : 0.8533, , acc: 0.8533, acc_mean: 0.8707
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (174) : 0.7200, , acc: 0.7200, acc_mean: 0.8699
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (175) : 0.8800, , acc: 0.8800, acc_mean: 0.8699
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (176) : 0.8667, , acc: 0.8667, acc_mean: 0.8699
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (177) : 0.8800, , acc: 0.8800, acc_mean: 0.8700
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (178) : 0.8667, , acc: 0.8667, acc_mean: 0.8699
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (179) : 0.8933, , acc: 0.8933, acc_mean: 0.8701
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (180) : 0.8267, , acc: 0.8267, acc_mean: 0.8698
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (181) : 0.8800, , acc: 0.8800, acc_mean: 0.8699
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (182) : 0.8533, , acc: 0.8533, acc_mean: 0.8698
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (183) : 0.8400, , acc: 0.8400, acc_mean: 0.8696
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (184) : 0.9600, , acc: 0.9600, acc_mean: 0.8701
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (185) : 0.8400, , acc: 0.8400, acc_mean: 0.8700
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (186) : 0.8400, , acc: 0.8400, acc_mean: 0.8698
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (187) : 0.6400, , acc: 0.6400, acc_mean: 0.8686
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (188) : 0.8400, , acc: 0.8400, acc_mean: 0.8684
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (189) : 0.9333, , acc: 0.9333, acc_mean: 0.8688
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (190) : 0.8667, , acc: 0.8667, acc_mean: 0.8688
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (191) : 0.8933, , acc: 0.8933, acc_mean: 0.8689
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (192) : 0.8533, , acc: 0.8533, acc_mean: 0.8688
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (193) : 0.8933, , acc: 0.8933, acc_mean: 0.8689
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (194) : 0.8400, , acc: 0.8400, acc_mean: 0.8688
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (195) : 0.8533, , acc: 0.8533, acc_mean: 0.8687
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (196) : 0.8400, , acc: 0.8400, acc_mean: 0.8686
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (197) : 0.8400, , acc: 0.8400, acc_mean: 0.8684
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (198) : 0.9067, , acc: 0.9067, acc_mean: 0.8686
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (199) : 0.9333, , acc: 0.9333, acc_mean: 0.8689
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (200) : 0.8667, , acc: 0.8667, acc_mean: 0.8689
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (201) : 0.8400, , acc: 0.8400, acc_mean: 0.8688
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (202) : 0.8133, , acc: 0.8133, acc_mean: 0.8685
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (203) : 0.8133, , acc: 0.8133, acc_mean: 0.8682
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (204) : 0.7867, , acc: 0.7867, acc_mean: 0.8678
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (205) : 0.9333, , acc: 0.9333, acc_mean: 0.8682
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (206) : 0.8933, , acc: 0.8933, acc_mean: 0.8683
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (207) : 0.8533, , acc: 0.8533, acc_mean: 0.8682
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (208) : 0.9600, , acc: 0.9600, acc_mean: 0.8686
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (209) : 0.9467, , acc: 0.9467, acc_mean: 0.8690
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (210) : 0.8133, , acc: 0.8133, acc_mean: 0.8688
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (211) : 0.9333, , acc: 0.9333, acc_mean: 0.8691
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (212) : 0.7733, , acc: 0.7733, acc_mean: 0.8686
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (213) : 0.8267, , acc: 0.8267, acc_mean: 0.8684
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (214) : 0.8400, , acc: 0.8400, acc_mean: 0.8683
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (215) : 0.8400, , acc: 0.8400, acc_mean: 0.8681
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (216) : 0.8933, , acc: 0.8933, acc_mean: 0.8683
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (217) : 0.8133, , acc: 0.8133, acc_mean: 0.8680
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (218) : 0.8267, , acc: 0.8267, acc_mean: 0.8678
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (219) : 0.8267, , acc: 0.8267, acc_mean: 0.8676
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (220) : 0.9067, , acc: 0.9067, acc_mean: 0.8678
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (221) : 0.9333, , acc: 0.9333, acc_mean: 0.8681
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (222) : 0.8267, , acc: 0.8267, acc_mean: 0.8679
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (223) : 0.9467, , acc: 0.9467, acc_mean: 0.8683
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (224) : 0.8000, , acc: 0.8000, acc_mean: 0.8680
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (225) : 0.8933, , acc: 0.8933, acc_mean: 0.8681
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (226) : 0.8133, , acc: 0.8133, acc_mean: 0.8678
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (227) : 0.9067, , acc: 0.9067, acc_mean: 0.8680
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (228) : 0.9067, , acc: 0.9067, acc_mean: 0.8682
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (229) : 0.7867, , acc: 0.7867, acc_mean: 0.8678
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (230) : 0.9067, , acc: 0.9067, acc_mean: 0.8680
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (231) : 0.8667, , acc: 0.8667, acc_mean: 0.8680
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (232) : 0.8933, , acc: 0.8933, acc_mean: 0.8681
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (233) : 0.8267, , acc: 0.8267, acc_mean: 0.8679
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (234) : 0.7867, , acc: 0.7867, acc_mean: 0.8676
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (235) : 0.7867, , acc: 0.7867, acc_mean: 0.8672
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (236) : 0.7733, , acc: 0.7733, acc_mean: 0.8668
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (237) : 0.9200, , acc: 0.9200, acc_mean: 0.8671
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (238) : 0.8667, , acc: 0.8667, acc_mean: 0.8671
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (239) : 0.8667, , acc: 0.8667, acc_mean: 0.8671
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (240) : 0.9467, , acc: 0.9467, acc_mean: 0.8674
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (241) : 0.9333, , acc: 0.9333, acc_mean: 0.8677
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (242) : 0.8800, , acc: 0.8800, acc_mean: 0.8677
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (243) : 0.7733, , acc: 0.7733, acc_mean: 0.8673
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (244) : 0.7600, , acc: 0.7600, acc_mean: 0.8669
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (245) : 0.9333, , acc: 0.9333, acc_mean: 0.8672
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (246) : 0.9333, , acc: 0.9333, acc_mean: 0.8674
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (247) : 0.8267, , acc: 0.8267, acc_mean: 0.8673
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (248) : 0.8667, , acc: 0.8667, acc_mean: 0.8673
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (249) : 0.8667, , acc: 0.8667, acc_mean: 0.8673
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (250) : 0.9333, , acc: 0.9333, acc_mean: 0.8675
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (251) : 0.8667, , acc: 0.8667, acc_mean: 0.8675
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (252) : 0.8933, , acc: 0.8933, acc_mean: 0.8676
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (253) : 0.8533, , acc: 0.8533, acc_mean: 0.8676
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (254) : 0.8933, , acc: 0.8933, acc_mean: 0.8677
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (255) : 0.9333, , acc: 0.9333, acc_mean: 0.8679
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (256) : 0.9733, , acc: 0.9733, acc_mean: 0.8683
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (257) : 0.8267, , acc: 0.8267, acc_mean: 0.8682
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (258) : 0.8267, , acc: 0.8267, acc_mean: 0.8680
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (259) : 0.8400, , acc: 0.8400, acc_mean: 0.8679
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (260) : 0.7467, , acc: 0.7467, acc_mean: 0.8674
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (261) : 0.8800, , acc: 0.8800, acc_mean: 0.8675
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (262) : 0.9600, , acc: 0.9600, acc_mean: 0.8678
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (263) : 0.7600, , acc: 0.7600, acc_mean: 0.8674
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (264) : 0.7467, , acc: 0.7467, acc_mean: 0.8670
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (265) : 0.8667, , acc: 0.8667, acc_mean: 0.8670
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (266) : 0.9200, , acc: 0.9200, acc_mean: 0.8672
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (267) : 0.9600, , acc: 0.9600, acc_mean: 0.8675
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (268) : 0.9067, , acc: 0.9067, acc_mean: 0.8677
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (269) : 0.9067, , acc: 0.9067, acc_mean: 0.8678
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (270) : 0.9067, , acc: 0.9067, acc_mean: 0.8679
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (271) : 0.8533, , acc: 0.8533, acc_mean: 0.8679
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (272) : 0.8800, , acc: 0.8800, acc_mean: 0.8679
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (273) : 0.8800, , acc: 0.8800, acc_mean: 0.8680
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (274) : 0.7733, , acc: 0.7733, acc_mean: 0.8676
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (275) : 0.8800, , acc: 0.8800, acc_mean: 0.8677
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (276) : 0.8267, , acc: 0.8267, acc_mean: 0.8675
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (277) : 0.8933, , acc: 0.8933, acc_mean: 0.8676
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (278) : 0.8000, , acc: 0.8000, acc_mean: 0.8674
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (279) : 0.7600, , acc: 0.7600, acc_mean: 0.8670
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (280) : 0.8667, , acc: 0.8667, acc_mean: 0.8670
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (281) : 0.7467, , acc: 0.7467, acc_mean: 0.8666
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (282) : 0.9467, , acc: 0.9467, acc_mean: 0.8669
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (283) : 0.8800, , acc: 0.8800, acc_mean: 0.8669
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (284) : 0.9600, , acc: 0.9600, acc_mean: 0.8672
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (285) : 0.8400, , acc: 0.8400, acc_mean: 0.8671
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (286) : 0.8933, , acc: 0.8933, acc_mean: 0.8672
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (287) : 0.9200, , acc: 0.9200, acc_mean: 0.8674
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (288) : 0.7867, , acc: 0.7867, acc_mean: 0.8671
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (289) : 0.8800, , acc: 0.8800, acc_mean: 0.8672
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (290) : 0.6800, , acc: 0.6800, acc_mean: 0.8665
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (291) : 0.9333, , acc: 0.9333, acc_mean: 0.8668
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (292) : 0.9467, , acc: 0.9467, acc_mean: 0.8670
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (293) : 0.9200, , acc: 0.9200, acc_mean: 0.8672
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (294) : 0.7200, , acc: 0.7200, acc_mean: 0.8667
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (295) : 0.9333, , acc: 0.9333, acc_mean: 0.8669
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (296) : 0.9733, , acc: 0.9733, acc_mean: 0.8673
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (297) : 0.8667, , acc: 0.8667, acc_mean: 0.8673
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (298) : 0.9467, , acc: 0.9467, acc_mean: 0.8676
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (299) : 0.8400, , acc: 0.8400, acc_mean: 0.8675
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (300) : 0.7600, , acc: 0.7600, acc_mean: 0.8671
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (301) : 0.7600, , acc: 0.7600, acc_mean: 0.8668
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (302) : 0.9600, , acc: 0.9600, acc_mean: 0.8671
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (303) : 0.8000, , acc: 0.8000, acc_mean: 0.8668
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (304) : 0.8933, , acc: 0.8933, acc_mean: 0.8669
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (305) : 0.9333, , acc: 0.9333, acc_mean: 0.8671
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (306) : 0.9467, , acc: 0.9467, acc_mean: 0.8674
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (307) : 0.6933, , acc: 0.6933, acc_mean: 0.8668
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (308) : 0.9067, , acc: 0.9067, acc_mean: 0.8670
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (309) : 0.7867, , acc: 0.7867, acc_mean: 0.8667
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (310) : 0.9067, , acc: 0.9067, acc_mean: 0.8668
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (311) : 0.8933, , acc: 0.8933, acc_mean: 0.8669
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (312) : 0.8400, , acc: 0.8400, acc_mean: 0.8668
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (313) : 0.9467, , acc: 0.9467, acc_mean: 0.8671
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (314) : 0.8400, , acc: 0.8400, acc_mean: 0.8670
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (315) : 0.8667, , acc: 0.8667, acc_mean: 0.8670
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (316) : 0.8133, , acc: 0.8133, acc_mean: 0.8668
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (317) : 0.8267, , acc: 0.8267, acc_mean: 0.8667
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (318) : 0.9600, , acc: 0.9600, acc_mean: 0.8670
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (319) : 0.8533, , acc: 0.8533, acc_mean: 0.8670
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (320) : 0.8000, , acc: 0.8000, acc_mean: 0.8667
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (321) : 0.8267, , acc: 0.8267, acc_mean: 0.8666
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (322) : 0.9467, , acc: 0.9467, acc_mean: 0.8669
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (323) : 0.9333, , acc: 0.9333, acc_mean: 0.8671
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (324) : 0.9200, , acc: 0.9200, acc_mean: 0.8672
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (325) : 0.9200, , acc: 0.9200, acc_mean: 0.8674
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (326) : 0.8133, , acc: 0.8133, acc_mean: 0.8672
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (327) : 0.9067, , acc: 0.9067, acc_mean: 0.8674
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (328) : 0.7333, , acc: 0.7333, acc_mean: 0.8669
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (329) : 0.8667, , acc: 0.8667, acc_mean: 0.8669
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (330) : 0.9467, , acc: 0.9467, acc_mean: 0.8672
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (331) : 0.9333, , acc: 0.9333, acc_mean: 0.8674
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (332) : 0.8000, , acc: 0.8000, acc_mean: 0.8672
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (333) : 0.7467, , acc: 0.7467, acc_mean: 0.8668
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (334) : 0.8133, , acc: 0.8133, acc_mean: 0.8667
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (335) : 0.7333, , acc: 0.7333, acc_mean: 0.8663
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (336) : 0.8533, , acc: 0.8533, acc_mean: 0.8662
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (337) : 0.8267, , acc: 0.8267, acc_mean: 0.8661
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (338) : 0.9333, , acc: 0.9333, acc_mean: 0.8663
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (339) : 0.7867, , acc: 0.7867, acc_mean: 0.8661
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (340) : 0.9067, , acc: 0.9067, acc_mean: 0.8662
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (341) : 0.9067, , acc: 0.9067, acc_mean: 0.8663
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (342) : 0.8800, , acc: 0.8800, acc_mean: 0.8664
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (343) : 0.8533, , acc: 0.8533, acc_mean: 0.8663
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (344) : 0.8667, , acc: 0.8667, acc_mean: 0.8663
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (345) : 0.9733, , acc: 0.9733, acc_mean: 0.8666
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (346) : 0.9067, , acc: 0.9067, acc_mean: 0.8667
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (347) : 0.9600, , acc: 0.9600, acc_mean: 0.8670
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (348) : 0.8000, , acc: 0.8000, acc_mean: 0.8668
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (349) : 0.8933, , acc: 0.8933, acc_mean: 0.8669
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (350) : 0.8800, , acc: 0.8800, acc_mean: 0.8669
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (351) : 0.8133, , acc: 0.8133, acc_mean: 0.8668
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (352) : 0.9333, , acc: 0.9333, acc_mean: 0.8670
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (353) : 0.7867, , acc: 0.7867, acc_mean: 0.8667
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (354) : 0.8667, , acc: 0.8667, acc_mean: 0.8667
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (355) : 0.8133, , acc: 0.8133, acc_mean: 0.8666
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (356) : 0.9067, , acc: 0.9067, acc_mean: 0.8667
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (357) : 0.9333, , acc: 0.9333, acc_mean: 0.8669
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (358) : 0.9067, , acc: 0.9067, acc_mean: 0.8670
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (359) : 0.9200, , acc: 0.9200, acc_mean: 0.8671
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (360) : 0.8133, , acc: 0.8133, acc_mean: 0.8670
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (361) : 0.9600, , acc: 0.9600, acc_mean: 0.8673
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (362) : 0.8800, , acc: 0.8800, acc_mean: 0.8673
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (363) : 0.8400, , acc: 0.8400, acc_mean: 0.8672
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (364) : 0.8133, , acc: 0.8133, acc_mean: 0.8671
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (365) : 0.9467, , acc: 0.9467, acc_mean: 0.8673
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (366) : 0.7333, , acc: 0.7333, acc_mean: 0.8669
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (367) : 0.8667, , acc: 0.8667, acc_mean: 0.8669
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (368) : 0.7600, , acc: 0.7600, acc_mean: 0.8666
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (369) : 0.8800, , acc: 0.8800, acc_mean: 0.8667
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (370) : 0.7733, , acc: 0.7733, acc_mean: 0.8664
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (371) : 0.8000, , acc: 0.8000, acc_mean: 0.8662
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (372) : 0.8800, , acc: 0.8800, acc_mean: 0.8663
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (373) : 0.8667, , acc: 0.8667, acc_mean: 0.8663
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (374) : 0.8800, , acc: 0.8800, acc_mean: 0.8663
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (375) : 0.8400, , acc: 0.8400, acc_mean: 0.8662
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (376) : 0.8533, , acc: 0.8533, acc_mean: 0.8662
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (377) : 0.9200, , acc: 0.9200, acc_mean: 0.8663
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (378) : 0.9067, , acc: 0.9067, acc_mean: 0.8665
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (379) : 0.8667, , acc: 0.8667, acc_mean: 0.8665
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (380) : 0.8133, , acc: 0.8133, acc_mean: 0.8663
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (381) : 0.9333, , acc: 0.9333, acc_mean: 0.8665
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (382) : 0.9200, , acc: 0.9200, acc_mean: 0.8666
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (383) : 0.9067, , acc: 0.9067, acc_mean: 0.8667
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (384) : 0.8800, , acc: 0.8800, acc_mean: 0.8668
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (385) : 0.8800, , acc: 0.8800, acc_mean: 0.8668
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (386) : 0.8933, , acc: 0.8933, acc_mean: 0.8669
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (387) : 0.9067, , acc: 0.9067, acc_mean: 0.8670
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (388) : 0.8800, , acc: 0.8800, acc_mean: 0.8670
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (389) : 0.9467, , acc: 0.9467, acc_mean: 0.8672
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (390) : 0.8800, , acc: 0.8800, acc_mean: 0.8672
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (391) : 0.9600, , acc: 0.9600, acc_mean: 0.8675
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (392) : 0.8933, , acc: 0.8933, acc_mean: 0.8675
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (393) : 0.7467, , acc: 0.7467, acc_mean: 0.8672
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (394) : 0.9067, , acc: 0.9067, acc_mean: 0.8673
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (395) : 0.9067, , acc: 0.9067, acc_mean: 0.8674
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (396) : 0.9600, , acc: 0.9600, acc_mean: 0.8677
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (397) : 0.9067, , acc: 0.9067, acc_mean: 0.8678
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (398) : 0.7067, , acc: 0.7067, acc_mean: 0.8674
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (399) : 0.8400, , acc: 0.8400, acc_mean: 0.8673
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (400) : 0.8667, , acc: 0.8667, acc_mean: 0.8673
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (401) : 0.8933, , acc: 0.8933, acc_mean: 0.8674
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (402) : 0.9067, , acc: 0.9067, acc_mean: 0.8675
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (403) : 0.9067, , acc: 0.9067, acc_mean: 0.8676
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (404) : 0.9333, , acc: 0.9333, acc_mean: 0.8677
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (405) : 0.9200, , acc: 0.9200, acc_mean: 0.8678
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (406) : 0.9200, , acc: 0.9200, acc_mean: 0.8680
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (407) : 0.8933, , acc: 0.8933, acc_mean: 0.8680
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (408) : 0.8400, , acc: 0.8400, acc_mean: 0.8680
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (409) : 0.8933, , acc: 0.8933, acc_mean: 0.8680
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (410) : 0.8800, , acc: 0.8800, acc_mean: 0.8681
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (411) : 0.8800, , acc: 0.8800, acc_mean: 0.8681
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (412) : 0.8933, , acc: 0.8933, acc_mean: 0.8682
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (413) : 0.8000, , acc: 0.8000, acc_mean: 0.8680
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (414) : 0.8133, , acc: 0.8133, acc_mean: 0.8679
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (415) : 0.8667, , acc: 0.8667, acc_mean: 0.8679
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (416) : 0.8933, , acc: 0.8933, acc_mean: 0.8679
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (417) : 0.8933, , acc: 0.8933, acc_mean: 0.8680
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (418) : 0.8533, , acc: 0.8533, acc_mean: 0.8679
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (419) : 0.8667, , acc: 0.8667, acc_mean: 0.8679
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (420) : 0.9333, , acc: 0.9333, acc_mean: 0.8681
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (421) : 0.9067, , acc: 0.9067, acc_mean: 0.8682
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (422) : 0.9333, , acc: 0.9333, acc_mean: 0.8683
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (423) : 0.9200, , acc: 0.9200, acc_mean: 0.8685
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (424) : 0.9600, , acc: 0.9600, acc_mean: 0.8687
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (425) : 0.8400, , acc: 0.8400, acc_mean: 0.8686
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (426) : 0.9600, , acc: 0.9600, acc_mean: 0.8688
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (427) : 0.8533, , acc: 0.8533, acc_mean: 0.8688
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (428) : 0.8000, , acc: 0.8000, acc_mean: 0.8686
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (429) : 0.9600, , acc: 0.9600, acc_mean: 0.8688
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (430) : 0.9067, , acc: 0.9067, acc_mean: 0.8689
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (431) : 0.9333, , acc: 0.9333, acc_mean: 0.8691
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (432) : 0.9333, , acc: 0.9333, acc_mean: 0.8692
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (433) : 0.8533, , acc: 0.8533, acc_mean: 0.8692
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (434) : 0.8800, , acc: 0.8800, acc_mean: 0.8692
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (435) : 0.9867, , acc: 0.9867, acc_mean: 0.8695
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (436) : 0.9200, , acc: 0.9200, acc_mean: 0.8696
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (437) : 0.8400, , acc: 0.8400, acc_mean: 0.8695
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (438) : 0.9867, , acc: 0.9867, acc_mean: 0.8698
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (439) : 0.8933, , acc: 0.8933, acc_mean: 0.8698
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (440) : 0.9467, , acc: 0.9467, acc_mean: 0.8700
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (441) : 0.8800, , acc: 0.8800, acc_mean: 0.8700
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (442) : 0.8800, , acc: 0.8800, acc_mean: 0.8701
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (443) : 0.9067, , acc: 0.9067, acc_mean: 0.8701
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (444) : 0.9067, , acc: 0.9067, acc_mean: 0.8702
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (445) : 0.9733, , acc: 0.9733, acc_mean: 0.8705
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (446) : 0.8400, , acc: 0.8400, acc_mean: 0.8704
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (447) : 0.7867, , acc: 0.7867, acc_mean: 0.8702
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (448) : 0.9200, , acc: 0.9200, acc_mean: 0.8703
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (449) : 0.8933, , acc: 0.8933, acc_mean: 0.8704
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (450) : 0.8667, , acc: 0.8667, acc_mean: 0.8704
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (451) : 0.9067, , acc: 0.9067, acc_mean: 0.8704
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (452) : 0.8667, , acc: 0.8667, acc_mean: 0.8704
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (453) : 0.8400, , acc: 0.8400, acc_mean: 0.8704
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (454) : 0.8133, , acc: 0.8133, acc_mean: 0.8702
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (455) : 0.8400, , acc: 0.8400, acc_mean: 0.8702
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (456) : 0.8133, , acc: 0.8133, acc_mean: 0.8701
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (457) : 0.7200, , acc: 0.7200, acc_mean: 0.8697
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (458) : 0.8800, , acc: 0.8800, acc_mean: 0.8697
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (459) : 0.8533, , acc: 0.8533, acc_mean: 0.8697
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (460) : 0.9067, , acc: 0.9067, acc_mean: 0.8698
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (461) : 0.8133, , acc: 0.8133, acc_mean: 0.8697
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (462) : 0.8533, , acc: 0.8533, acc_mean: 0.8696
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (463) : 0.8133, , acc: 0.8133, acc_mean: 0.8695
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (464) : 0.8533, , acc: 0.8533, acc_mean: 0.8695
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (465) : 0.9200, , acc: 0.9200, acc_mean: 0.8696
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (466) : 0.9600, , acc: 0.9600, acc_mean: 0.8698
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (467) : 0.9200, , acc: 0.9200, acc_mean: 0.8699
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (468) : 0.8267, , acc: 0.8267, acc_mean: 0.8698
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (469) : 0.7867, , acc: 0.7867, acc_mean: 0.8696
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (470) : 0.8133, , acc: 0.8133, acc_mean: 0.8695
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (471) : 0.7333, , acc: 0.7333, acc_mean: 0.8692
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (472) : 0.8400, , acc: 0.8400, acc_mean: 0.8691
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (473) : 0.8667, , acc: 0.8667, acc_mean: 0.8691
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (474) : 0.9200, , acc: 0.9200, acc_mean: 0.8692
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (475) : 0.9200, , acc: 0.9200, acc_mean: 0.8694
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (476) : 0.9600, , acc: 0.9600, acc_mean: 0.8695
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (477) : 0.9067, , acc: 0.9067, acc_mean: 0.8696
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (478) : 0.9733, , acc: 0.9733, acc_mean: 0.8698
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (479) : 0.9200, , acc: 0.9200, acc_mean: 0.8699
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (480) : 0.8533, , acc: 0.8533, acc_mean: 0.8699
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (481) : 0.9467, , acc: 0.9467, acc_mean: 0.8701
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (482) : 0.7867, , acc: 0.7867, acc_mean: 0.8699
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (483) : 0.8533, , acc: 0.8533, acc_mean: 0.8699
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (484) : 0.8933, , acc: 0.8933, acc_mean: 0.8699
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (485) : 0.9067, , acc: 0.9067, acc_mean: 0.8700
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (486) : 0.8933, , acc: 0.8933, acc_mean: 0.8700
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (487) : 0.9733, , acc: 0.9733, acc_mean: 0.8702
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (488) : 0.9067, , acc: 0.9067, acc_mean: 0.8703
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (489) : 0.8400, , acc: 0.8400, acc_mean: 0.8703
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (490) : 0.9333, , acc: 0.9333, acc_mean: 0.8704
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (491) : 0.7600, , acc: 0.7600, acc_mean: 0.8702
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (492) : 0.9200, , acc: 0.9200, acc_mean: 0.8703
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (493) : 0.9200, , acc: 0.9200, acc_mean: 0.8704
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (494) : 0.9067, , acc: 0.9067, acc_mean: 0.8704
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (495) : 0.9600, , acc: 0.9600, acc_mean: 0.8706
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (496) : 0.9733, , acc: 0.9733, acc_mean: 0.8708
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (497) : 0.8400, , acc: 0.8400, acc_mean: 0.8708
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (498) : 0.8800, , acc: 0.8800, acc_mean: 0.8708
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (499) : 0.9067, , acc: 0.9067, acc_mean: 0.8709
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (500) : 0.8533, , acc: 0.8533, acc_mean: 0.8708
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (501) : 0.9600, , acc: 0.9600, acc_mean: 0.8710
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (502) : 0.8667, , acc: 0.8667, acc_mean: 0.8710
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (503) : 0.9467, , acc: 0.9467, acc_mean: 0.8711
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (504) : 0.8933, , acc: 0.8933, acc_mean: 0.8712
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (505) : 0.9467, , acc: 0.9467, acc_mean: 0.8713
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (506) : 0.8000, , acc: 0.8000, acc_mean: 0.8712
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (507) : 0.9467, , acc: 0.9467, acc_mean: 0.8713
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (508) : 0.9200, , acc: 0.9200, acc_mean: 0.8714
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (509) : 0.8800, , acc: 0.8800, acc_mean: 0.8715
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (510) : 0.8267, , acc: 0.8267, acc_mean: 0.8714
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (511) : 0.9200, , acc: 0.9200, acc_mean: 0.8715
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (512) : 0.8267, , acc: 0.8267, acc_mean: 0.8714
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (513) : 0.9067, , acc: 0.9067, acc_mean: 0.8714
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (514) : 0.9467, , acc: 0.9467, acc_mean: 0.8716
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (515) : 0.8133, , acc: 0.8133, acc_mean: 0.8715
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (516) : 0.9067, , acc: 0.9067, acc_mean: 0.8715
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (517) : 0.9200, , acc: 0.9200, acc_mean: 0.8716
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (518) : 0.8267, , acc: 0.8267, acc_mean: 0.8715
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (519) : 0.8667, , acc: 0.8667, acc_mean: 0.8715
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (520) : 0.7467, , acc: 0.7467, acc_mean: 0.8713
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (521) : 0.8133, , acc: 0.8133, acc_mean: 0.8712
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (522) : 0.8400, , acc: 0.8400, acc_mean: 0.8711
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (523) : 0.8000, , acc: 0.8000, acc_mean: 0.8710
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (524) : 0.8533, , acc: 0.8533, acc_mean: 0.8710
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (525) : 0.8000, , acc: 0.8000, acc_mean: 0.8708
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (526) : 0.9200, , acc: 0.9200, acc_mean: 0.8709
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (527) : 0.9067, , acc: 0.9067, acc_mean: 0.8710
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (528) : 0.8933, , acc: 0.8933, acc_mean: 0.8710
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (529) : 0.9067, , acc: 0.9067, acc_mean: 0.8711
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (530) : 0.9067, , acc: 0.9067, acc_mean: 0.8712
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (531) : 0.8400, , acc: 0.8400, acc_mean: 0.8711
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (532) : 0.8533, , acc: 0.8533, acc_mean: 0.8711
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (533) : 0.8933, , acc: 0.8933, acc_mean: 0.8711
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (534) : 0.8000, , acc: 0.8000, acc_mean: 0.8710
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (535) : 0.9600, , acc: 0.9600, acc_mean: 0.8711
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (536) : 0.8800, , acc: 0.8800, acc_mean: 0.8712
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (537) : 0.9200, , acc: 0.9200, acc_mean: 0.8713
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (538) : 0.7733, , acc: 0.7733, acc_mean: 0.8711
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (539) : 0.8133, , acc: 0.8133, acc_mean: 0.8710
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (540) : 0.8400, , acc: 0.8400, acc_mean: 0.8709
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (541) : 0.8400, , acc: 0.8400, acc_mean: 0.8708
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (542) : 0.7600, , acc: 0.7600, acc_mean: 0.8706
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (543) : 0.8267, , acc: 0.8267, acc_mean: 0.8706
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (544) : 0.7467, , acc: 0.7467, acc_mean: 0.8703
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (545) : 0.8933, , acc: 0.8933, acc_mean: 0.8704
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (546) : 0.7600, , acc: 0.7600, acc_mean: 0.8702
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (547) : 0.8800, , acc: 0.8800, acc_mean: 0.8702
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (548) : 0.9333, , acc: 0.9333, acc_mean: 0.8703
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (549) : 0.8133, , acc: 0.8133, acc_mean: 0.8702
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (550) : 0.8933, , acc: 0.8933, acc_mean: 0.8702
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (551) : 0.8267, , acc: 0.8267, acc_mean: 0.8702
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (552) : 0.8400, , acc: 0.8400, acc_mean: 0.8701
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (553) : 0.9867, , acc: 0.9867, acc_mean: 0.8703
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (554) : 0.8533, , acc: 0.8533, acc_mean: 0.8703
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (555) : 0.8933, , acc: 0.8933, acc_mean: 0.8703
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (556) : 0.7733, , acc: 0.7733, acc_mean: 0.8702
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (557) : 0.9067, , acc: 0.9067, acc_mean: 0.8702
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (558) : 0.9333, , acc: 0.9333, acc_mean: 0.8703
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (559) : 0.9600, , acc: 0.9600, acc_mean: 0.8705
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (560) : 0.8533, , acc: 0.8533, acc_mean: 0.8705
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (561) : 0.8667, , acc: 0.8667, acc_mean: 0.8705
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (562) : 0.9067, , acc: 0.9067, acc_mean: 0.8705
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (563) : 0.8667, , acc: 0.8667, acc_mean: 0.8705
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (564) : 0.9067, , acc: 0.9067, acc_mean: 0.8706
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (565) : 0.8933, , acc: 0.8933, acc_mean: 0.8706
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (566) : 0.7733, , acc: 0.7733, acc_mean: 0.8705
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (567) : 0.8533, , acc: 0.8533, acc_mean: 0.8704
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (568) : 0.9467, , acc: 0.9467, acc_mean: 0.8706
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (569) : 0.8933, , acc: 0.8933, acc_mean: 0.8706
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (570) : 0.8533, , acc: 0.8533, acc_mean: 0.8706
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (571) : 0.8800, , acc: 0.8800, acc_mean: 0.8706
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (572) : 0.9067, , acc: 0.9067, acc_mean: 0.8706
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (573) : 0.8267, , acc: 0.8267, acc_mean: 0.8706
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (574) : 0.8800, , acc: 0.8800, acc_mean: 0.8706
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (575) : 0.6667, , acc: 0.6667, acc_mean: 0.8702
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (576) : 0.8400, , acc: 0.8400, acc_mean: 0.8702
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (577) : 0.8800, , acc: 0.8800, acc_mean: 0.8702
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (578) : 0.8000, , acc: 0.8000, acc_mean: 0.8701
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (579) : 0.9867, , acc: 0.9867, acc_mean: 0.8703
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (580) : 0.8533, , acc: 0.8533, acc_mean: 0.8702
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (581) : 0.7067, , acc: 0.7067, acc_mean: 0.8700
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (582) : 0.8400, , acc: 0.8400, acc_mean: 0.8699
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (583) : 0.8400, , acc: 0.8400, acc_mean: 0.8699
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (584) : 0.8133, , acc: 0.8133, acc_mean: 0.8698
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (585) : 0.7733, , acc: 0.7733, acc_mean: 0.8696
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (586) : 0.8933, , acc: 0.8933, acc_mean: 0.8696
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (587) : 0.8267, , acc: 0.8267, acc_mean: 0.8696
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (588) : 0.8933, , acc: 0.8933, acc_mean: 0.8696
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (589) : 0.9200, , acc: 0.9200, acc_mean: 0.8697
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (590) : 0.7600, , acc: 0.7600, acc_mean: 0.8695
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (591) : 0.8133, , acc: 0.8133, acc_mean: 0.8694
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (592) : 0.7867, , acc: 0.7867, acc_mean: 0.8693
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (593) : 0.8000, , acc: 0.8000, acc_mean: 0.8692
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (594) : 0.8133, , acc: 0.8133, acc_mean: 0.8691
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (595) : 0.8000, , acc: 0.8000, acc_mean: 0.8689
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (596) : 0.9200, , acc: 0.9200, acc_mean: 0.8690
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (597) : 0.8000, , acc: 0.8000, acc_mean: 0.8689
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (598) : 0.8533, , acc: 0.8533, acc_mean: 0.8689
+ 04-26 at 19:49 | val :: (EuroSAT_test) : (599) : 0.9867, , acc: 0.9867, acc_mean: 0.8691
+ 04-26 at 19:49 | Test Acc (EuroSAT_test) = 0.8691 +- 0.0050
+ 04-26 at 19:49 | epoch: 0     step: 0      :: acc_mean: 0.8691  acc_std: 0.0050  acc_mean_full: 0.8691

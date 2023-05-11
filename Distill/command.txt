@@ -1,0 +1,9 @@
+python main.py system=ce_distill_ema_sgd trainer.gpus=1 backbone=resnet10  data.val_dataset=EuroSAT_test data.test_dataset=null print_val=false  trainer.log_every_n_steps=-1  unlabel_params.dataset=EuroSAT_train data.num_episodes=600  trainer.progress_bar_refresh_rate=0 print_val=false launcher.gpus=1 pretrained=true model_name=try_EuroSAT
+
+
+python main.py system=ce_distill_ema_sgd trainer.gpus=1 backbone=resnet10  data.val_dataset=ChestX_test data.test_dataset=null print_val=false  trainer.log_every_n_steps=-1  unlabel_params.dataset=ChestX_train data.num_episodes=600  trainer.progress_bar_refresh_rate=0 print_val=false launcher.gpus=1  optimizer=Adam model_name=try_chestx2
+
+python main.py system=ce_distill_ema_sgd trainer.gpus=1 backbone=resnet10  data.val_dataset=CropDisease_test data.test_dataset=null print_val=false  trainer.log_every_n_steps=-1  unlabel_params.dataset=CropDisease_train data.num_episodes=600  trainer.progress_bar_refresh_rate=0 print_val=false launcher.gpus=1  model_name=try_CropDisease
+
+conda activate FSL
+cd /d F:\jupyterfile\CDFSL
