@@ -49,5 +49,9 @@ For 5-way 5-shot evaluation on EuroSAT dataset:
 ```bash
 python main.py system=few_shot  data.test_dataset=EuroSAT_test  ckpt=[pretrained-checkpoint]
 ```
+## Acknowledgement
+- [cdfsl-benchmark](https://github.com/IBM/cdfsl-benchmark)
+- [Dynamic Distillation Network for Cross-Domain Few-Shot Recognition with Unlabeled Data](https://git.io/Jilgs)
+- [IDM: An Intermediate Domain Module for Domain Adaptive Person Re-ID](https://github.com/SikaStar/IDM)
 
 

@@ -1,0 +1,5 @@
+/Distill/test_logs/
+/Distill/pretrained_nips/
+.idea
+Distill/.vscode/
+Distill/ckpt/
