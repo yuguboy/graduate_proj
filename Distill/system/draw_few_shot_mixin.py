@@ -132,6 +132,7 @@ class FewShotMixin():
                                x_support,
                                y_support,
                                x_query,
+                               y_query,
                                norm=self.hparams.eval.fine_tune.use_norm)
 
         _val = accuracy(topk_ind, y_query.long())

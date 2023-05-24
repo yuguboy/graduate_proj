@@ -3,3 +3,5 @@
 .idea
 Distill/.vscode/
 Distill/ckpt/
+/Distill/figs/
+/Distill/saved_logs/

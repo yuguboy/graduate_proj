@@ -1,9 +1,21 @@
-python main.py system=ce_distill_ema_sgd trainer.gpus=1 backbone=resnet10  data.val_dataset=EuroSAT_test data.test_dataset=null print_val=false  trainer.log_every_n_steps=-1  unlabel_params.dataset=EuroSAT_train data.num_episodes=600  trainer.progress_bar_refresh_rate=0 print_val=false launcher.gpus=1 pretrained=true model_name=try_EuroSAT
+CUDA_VISIBLE_DEVICES=0 nohup python main.py system=ce_distill_ema_sgd trainer.gpus=1 backbone=resnet10  data.val_dataset=EuroSAT_test data.test_dataset=null print_val=false  trainer.log_every_n_steps=-1  unlabel_params.dataset=EuroSAT_train data.num_episodes=600  trainer.progress_bar_refresh_rate=0 print_val=false launcher.gpus=1 pretrained=true model_name=EuroSAT_428 >out11.out &
 
 
-python main.py system=ce_distill_ema_sgd trainer.gpus=1 backbone=resnet10  data.val_dataset=ChestX_test data.test_dataset=null print_val=false  trainer.log_every_n_steps=-1  unlabel_params.dataset=ChestX_train data.num_episodes=600  trainer.progress_bar_refresh_rate=0 print_val=false launcher.gpus=1  optimizer=Adam model_name=try_chestx2
+CUDA_VISIBLE_DEVICES=1 nohup python main.py system=ce_distill_ema_sgd trainer.gpus=1 backbone=resnet10  data.val_dataset=ChestX_test data.test_dataset=null print_val=false  trainer.log_every_n_steps=-1  unlabel_params.dataset=ChestX_train data.num_episodes=300  trainer.progress_bar_refresh_rate=0 print_val=false launcher.gpus=1  model_name=m_eq05_ChestX >out22.out&
+	
+CUDA_VISIBLE_DEVICES=0 nohup python main.py system=ce_distill_ema_sgd trainer.gpus=3 backbone=resnet10  data.val_dataset=ChestX_test data.test_dataset=null print_val=false  trainer.log_every_n_steps=-1  unlabel_params.dataset=ChestX_train data.num_episodes=300  trainer.progress_bar_refresh_rate=0 print_val=false launcher.gpus=3 ckpt_preload=./ckpt/ChestX_batch64/best.ckpt model_name=ChestX_428 &
 
-python main.py system=ce_distill_ema_sgd trainer.gpus=1 backbone=resnet10  data.val_dataset=CropDisease_test data.test_dataset=null print_val=false  trainer.log_every_n_steps=-1  unlabel_params.dataset=CropDisease_train data.num_episodes=600  trainer.progress_bar_refresh_rate=0 print_val=false launcher.gpus=1  model_name=try_CropDisease
+CUDA_VISIBLE_DEVICES=1 nohup python main.py system=ce_distill_ema_sgd trainer.gpus=1 backbone=resnet10  data.val_dataset=CropDisease_test data.test_dataset=null print_val=false  trainer.log_every_n_steps=-1  unlabel_params.dataset=CropDisease_train data.num_episodes=300  trainer.progress_bar_refresh_rate=0 print_val=false launcher.gpus=1  model_name=m_eq05_CropDisease >out24.out &
 
-conda activate FSL
-cd /d F:\jupyterfile\CDFSL
+
+CUDA_VISIBLE_DEVICES=2 nohup python main.py system=ce_distill_ema_sgd trainer.gpus=1 backbone=resnet10  data.val_dataset=ISIC_test data.test_dataset=null print_val=false  trainer.log_every_n_steps=-1  unlabel_params.dataset=ISIC_train data.num_episodes=600  trainer.progress_bar_refresh_rate=0 print_val=false launcher.gpus=1  model_name=m_eq05_ISIC >out33.out &
+
+
+
+python main.py system=few_shot  data.test_dataset=EuroSAT_test  ckpt=./ckpt/EuroSAT_428/best.ckpt
+
+python main.py system=few_shot  data.test_dataset=ISIC_test  ckpt=./ckpt/ISIC_428/best.ckpt
+
+python main.py system=few_shot  data.test_dataset=ChestX_test  ckpt=./ckpt/ChestX_428/last.ckpt
+
+python main.py system=few_shot  data.test_dataset=CropDisease_test  ckpt=./ckpt/CropDisease_428/best.ckpt
