@@ -8,11 +8,8 @@
 
 ## Method $ Model
 
-![image-20230530150635570](C:\Users\91984\AppData\Roaming\Typora\typora-user-images\image-20230530150635570.png)
+![model](model.png)
 
-$$
-Loss = Loss^{source}_{ce}+Loss^{taget}_{ce}+Loss^{inter}_{bf+bp+div}
-$$
 
 
 ## Prerequisite
